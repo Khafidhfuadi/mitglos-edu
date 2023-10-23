@@ -83,8 +83,8 @@ function Home() {
               />
             </div>
           </div>
-          <div className="col-md-6 ps-5">
-            <img src={hero} className="img-fluid" alt="hero-img" width={600} />
+          <div className="col-md-6 text-end">
+            <img src={hero} className="img-fluid" alt="hero-img" width={420} />
           </div>
         </div>
       </section>

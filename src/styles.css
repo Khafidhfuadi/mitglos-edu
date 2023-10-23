@@ -37,5 +37,34 @@ section#hero {
 }
 
 section#benefits {
+  padding-top: 100px;
+  padding-bottom: 100px;
+
   background: #2489d3;
+}
+
+.benefit-container {
+  padding: 0 100px 0 100px;
+}
+
+.heading {
+  padding-bottom: 120px;
+
+  color: #f8f8f8;
+}
+
+.section-title {
+  font-family: Outfit;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 89.6px */
+}
+
+.sub-title {
+  font-family: SklowReguler;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 140%; /* 33.6px */
+  margin: 0;
 }

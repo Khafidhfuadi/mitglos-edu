@@ -12,3 +12,10 @@
   src: local("SklowBold"),
     url("./assets/fonts/Sklow-Bold.ttf") format("truetype");
 }
+
+/* medium */
+@font-face {
+  font-family: "SklowMedium"; /*Can be any text*/
+  src: local("SklowMedium"),
+    url("./assets/fonts/Sklow-Medium.ttf") format("truetype");
+}

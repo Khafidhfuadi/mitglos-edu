@@ -36,10 +36,13 @@ section#hero {
   gap: 24px;
 }
 
-section#benefits {
+section#benefits,
+section#courses {
   padding-top: 100px;
   padding-bottom: 100px;
+}
 
+section#benefits {
   background: #2489d3;
 }
 

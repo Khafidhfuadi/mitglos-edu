@@ -3,9 +3,11 @@ import hero from "./assets/img/hero-img.png";
 import logo from "./assets/img/logo.png";
 import Button from "./components/utils/Button";
 import BenefitCard from "./components/utils/BenefitCard";
+import CourseCard from "./components/utils/CourseCard";
+import thumbnailImg from "./assets/img/course-thumbnail.png";
 
 const goToCourseSection = () => {
-  const courseSection = document.getElementById("course");
+  const courseSection = document.getElementById("benefits");
   courseSection.scrollIntoView({ behavior: "smooth" });
 };
 
@@ -22,12 +24,12 @@ function Home() {
             </a> */}
             <img src={logo} alt="logo" width={150} />
 
-            <a
+            {/* <a
               className="navbar-brand-two mx-auto d-lg-none d-inline-block"
               href="#"
             >
               <img src={logo} alt="logo" width={150} />
-            </a>
+            </a> */}
             <div className="w-100 text-right">
               <button
                 className="navbar-toggler"
@@ -58,6 +60,9 @@ function Home() {
                 <a href="#" className="nav-link m-2 menu-item">
                   Corporate Training
                 </a>
+              </li>
+              <li className="nav-item">
+                <Button text="Login" onClick={goToCourseSection} />
               </li>
             </ul>
           </div>
@@ -132,6 +137,75 @@ function Home() {
               <BenefitCard
                 head="Lifetime akses"
                 desc="Modul dan rekaman kelas dapat diakses selamanya setelah lulus dari pelatihan"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="courses">
+        <div className="container">
+          <div className="heading text-center text-dark">
+            <h1 className="section-title">Pilih Yang Paling Cocok Untukmu</h1>
+            <p className="sub-title">
+              Berbagai macam pilihan dengan metode belajar yang cocok buat kamu
+            </p>
+          </div>
+          <div className="row ">
+            <div className="col d-flex align-items-stretch">
+              <CourseCard
+                thumbnailImg={thumbnailImg}
+                kategori="Webinar"
+                periode="12 Juli 2021"
+                pertemuan="1 Pertemuan"
+                tempat="Online"
+                judul="Belajar Menjadi Fullstack Developer"
+                ringkasan="Belajar menjadi fullstack developer dengan menggunakan bahasa pemrograman javascript"
+                hargaAsli="1000000"
+                discount="50"
+                onClick={() => {}}
+              />
+            </div>
+            <div className="col d-flex align-items-stretch">
+              <CourseCard
+                thumbnailImg={thumbnailImg}
+                kategori="Webinar"
+                periode="12 Juli 2021"
+                pertemuan="1 Pertemuan"
+                tempat="Online"
+                judul="Belajar Menjadi Fullstack Developer"
+                ringkasan="Belajar menjadi elajar menjadi fullstack developer dengelajar menjadi fullstack developer deng menggunakan bahasa pemrograman javascript"
+                hargaAsli="1000000"
+                discount="50"
+                onClick={() => {}}
+              />
+            </div>
+            <div className="col d-flex align-items-stretch">
+              <CourseCard
+                thumbnailImg={thumbnailImg}
+                kategori="Webinar"
+                periode="12 Juli 2021"
+                pertemuan="1 Pertemuan"
+                tempat="Online"
+                judul="Belajar Menjadi Fullstack Developer"
+                ringkasan="Belajar menjadi elajar menjadi fullstack developer dengelajar menjadi fullstack developer deng menggunakan bahasa pemrograman javascript"
+                hargaAsli="1000000"
+                discount="50"
+                onClick={() => {}}
+              />
+            </div>
+            <div className="col d-flex align-items-stretch">
+              <CourseCard
+                thumbnailImg={thumbnailImg}
+                kategori="Webinar"
+                periode="12 Juli 2021"
+                pertemuan="1 Pertemuan"
+                tempat="Online"
+                judul="Belajar Menjadi Fullstack Developer"
+                ringkasan="Belajar menjadi fullstack developer deng an menggunakan bahasa pemrograman javascript"
+                hargaAsli="1000000"
+                discount="50"
+                onClick={() => {}}
               />
             </div>
           </div>

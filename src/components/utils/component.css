@@ -8,11 +8,22 @@
   border-radius: 50px;
   background: #2489d3;
 
-  color: #fff;
-  font-family: SklowBold;
-  line-height: 140%; /* 28px */
   width: fit-content;
   cursor: pointer;
+
+  color: #fff;
+  font-family: SklowBold;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 28px */
+}
+
+.is-small {
+  display: inline-flex;
+  padding: 12px 32px;
+  gap: 10px;
+
+  font-size: 12px;
 }
 
 .outline {
@@ -77,9 +88,15 @@
   height: 56px;
   flex-shrink: 0;
   border-radius: 20px 0px;
-  background: #2489d3;
-  display: none;
-  transition: fill 0.3s ease;
+  /* background: #2489d3; */
+  /* display: none; */
+  /* transition: fill 0.3s ease; */
+}
+
+.benefit-card:hover .rectangle {
+  display: block;
+  /* background-image: url("../../assets/img/verified-hover.svg") no-repeat center; */
+  background-color: #2489d3;
 }
 
 .course-card {
@@ -235,4 +252,10 @@
   font-style: normal;
   font-weight: 700;
   line-height: 160%; /* 32px */
+}
+
+.testi-card {
+  width: 600px;
+  height: fit-content;
+  background: #f8f8f8;
 }

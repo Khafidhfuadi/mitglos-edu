@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./component.css";
-import verifiedLogo from "../../assets/img/verified.svg";
+import verifiedIcon from "../../assets/img/verified.svg";
+import verifiedIconHover from "../../assets/img/verified-hover.svg";
 
 const BenefitCard = ({ head, desc }) => {
   return (
@@ -11,7 +12,6 @@ const BenefitCard = ({ head, desc }) => {
 
       <div className="d-flex justify-content-end">
         <svg
-          className="verified-icon"
           width="40"
           height="40"
           viewBox="0 0 40 40"
@@ -33,6 +33,8 @@ const BenefitCard = ({ head, desc }) => {
             </clipPath>
           </defs>
         </svg>
+
+        {/* <img className="verified-icon-hover" src={verifiedIconHover} alt="" /> */}
       </div>
       <div className="rectangle"></div>
     </div>

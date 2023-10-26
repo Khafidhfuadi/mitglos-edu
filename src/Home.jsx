@@ -5,9 +5,15 @@ import Button from "./components/utils/Button";
 import BenefitCard from "./components/utils/BenefitCard";
 import CourseCard from "./components/utils/CourseCard";
 import thumbnailImg from "./assets/img/course-thumbnail.png";
+import advIcon from "./assets/img/adv-icon.svg";
+import mentor1 from "./assets/img/mentor-1.png";
+import mentor2 from "./assets/img/mentor-2.png";
+import linkedinIcon from "./assets/img/linkedin-icon.svg";
+import igIcon from "./assets/img/ig-icon.svg";
+import line from "./assets/img/line.png";
 
 const goToCourseSection = () => {
-  const courseSection = document.getElementById("benefits");
+  const courseSection = document.getElementById("courses");
   courseSection.scrollIntoView({ behavior: "smooth" });
 };
 
@@ -61,14 +67,17 @@ function Home() {
                   Corporate Training
                 </a>
               </li>
-              <li className="nav-item">
-                <Button text="Login" onClick={goToCourseSection} />
+              <li className="nav-item d-flex align-items-center">
+                <Button
+                  text="Login"
+                  onClick={goToCourseSection}
+                  isSmall={true}
+                />
               </li>
             </ul>
           </div>
         </div>
       </nav>
-
       <section className="container" id="hero">
         <div className="row justify-content-between vh-100 align-items-center">
           <div className="col-md-6 pe-5 ">
@@ -93,7 +102,6 @@ function Home() {
           </div>
         </div>
       </section>
-
       <section id="benefits">
         <div className="container">
           <div className="heading text-center">
@@ -142,7 +150,6 @@ function Home() {
           </div>
         </div>
       </section>
-
       <section id="courses">
         <div className="container">
           <div className="heading text-center text-dark">
@@ -150,6 +157,11 @@ function Home() {
             <p className="sub-title">
               Berbagai macam pilihan dengan metode belajar yang cocok buat kamu
             </p>
+          </div>
+          <div className="d-flex">
+            <Button text="Terbaru" onClick={() => {}} />
+            <Button text="Webinar" onClick={() => {}} />
+            <Button text="Course" onClick={() => {}} />
           </div>
           <div className="row ">
             <div className="col d-flex align-items-stretch">
@@ -210,6 +222,74 @@ function Home() {
             </div>
           </div>
         </div>
+      </section>
+      <section id="mentor">
+        <div className="container">
+          <div className="row">
+            <div className="col-6 d-flex justify-content-center align-items-center text-center">
+              <img className="line" src={line} alt="" />
+              <div className="row">
+                <div className="col-6">
+                  <div className="mentor-profile">
+                    <img src={mentor1} alt="" />
+                    <p className="mentor-name">Kak Yuni</p>
+                    <p className="position">Fullstack Developer</p>
+                    <div className="socmed">
+                      <a href="#">
+                        <img src={linkedinIcon} alt="" />
+                      </a>
+                      <a href="#">
+                        <img src={igIcon} alt="" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6">
+                  <div className="mentor-profile">
+                    <img src={mentor2} alt="" />
+                    <p className="mentor-name">Kak Yuni</p>
+                    <p className="position">Fullstack Developer</p>
+                    <div className="socmed">
+                      <a href="#">
+                        <img src={linkedinIcon} alt="" />
+                      </a>
+                      <a href="#">
+                        <img src={igIcon} alt="" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="heading p-0 ps-5">
+                <h1 className="section-title">
+                  Belajar Intensif bersama Mentor Terbaik Kami
+                </h1>
+                <p className="sub-title">
+                  Perkenalkan mentor terbaik kami di bidangnya.
+                </p>
+                <div className="adventages-container">
+                  <div className="advantages-list">
+                    <img src={advIcon} alt="" />
+                    <p>Bekerja di Big Company</p>
+                  </div>
+                  <div className="advantages-list">
+                    <img src={advIcon} alt="" />
+                    <p>Pengalaman mengajar sampai dengan 10 tahun</p>
+                  </div>
+                  <div className="advantages-list">
+                    <img src={advIcon} alt="" />
+                    <p>Bersertifikat Internasional</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="testimonial">
+        <div className="container"></div>
       </section>
     </>
   );

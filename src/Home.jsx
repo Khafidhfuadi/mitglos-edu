@@ -11,6 +11,7 @@ import mentor2 from "./assets/img/mentor-2.png";
 import linkedinIcon from "./assets/img/linkedin-icon.svg";
 import igIcon from "./assets/img/ig-icon.svg";
 import line from "./assets/img/line.png";
+import TestiCard from "./components/utils/TestiCard";
 
 const goToCourseSection = () => {
   const courseSection = document.getElementById("courses");
@@ -289,7 +290,19 @@ function Home() {
         </div>
       </section>
       <section id="testimonial">
-        <div className="container"></div>
+        <div className="container">
+          <div className="heading text-center">
+            <h1 className="section-title">Apa Kata Mereka?</h1>
+          </div>
+          <div className="row">
+            <div className="col d-flex align-items-stretch">
+              <TestiCard />
+            </div>
+            <div className="col d-flex align-items-stretch">
+              <TestiCard />
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );

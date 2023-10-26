@@ -36,15 +36,14 @@ section#hero {
   gap: 24px;
 }
 
-section#benefits,
-section#courses,
-section#mentor {
+section {
   padding-top: 100px;
   padding-bottom: 100px;
 }
 
 section#benefits,
-section#mentor {
+section#mentor,
+section#testimonial {
   background: #2489d3;
 }
 
@@ -108,7 +107,7 @@ section#mentor {
   margin-bottom: 4px;
 }
 
-.position {
+.mentor-profile .position {
   color: #f8f8f8;
   font-family: SklowReguler;
   font-size: 12px;

@@ -256,6 +256,43 @@
 
 .testi-card {
   width: 600px;
-  height: fit-content;
+  height: auto;
   background: #f8f8f8;
+  border-radius: 25px;
+  position: relative;
+
+  padding: 0px 30px 30px 30px;
+}
+
+img.quote-icon {
+  position: absolute;
+}
+
+.testi-card .content {
+  padding-top: 70px;
+  color: #1e1e1e;
+  font-family: SklowMedium;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 38.4px */
+}
+
+.profile-testi {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.profile-testi {
+  color: #1e1e1e;
+  font-family: SklowMedium;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 25.6px */
+}
+
+.profile-testi .position {
+  opacity: 0.7;
 }

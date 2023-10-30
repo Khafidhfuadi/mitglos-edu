@@ -12,6 +12,7 @@ import linkedinIcon from "./assets/img/linkedin-icon.svg";
 import igIcon from "./assets/img/ig-icon.svg";
 import line from "./assets/img/line.png";
 import TestiCard from "./components/utils/TestiCard";
+import chatModel from "./assets/img/chat-model.png";
 
 const goToCourseSection = () => {
   const courseSection = document.getElementById("courses");
@@ -304,6 +305,15 @@ function Home() {
           </div>
         </div>
       </section>
+      <div className="container">
+        <div className="contact">
+          <img src={chatModel} alt="" width={550} />
+          <div className="text-container">
+            <div className="sub-title">Masih Bingung Pilih Yang Mana?</div>
+            <div className="heading">Tanyakan Via Chat Kepada Kami</div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

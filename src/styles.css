@@ -146,3 +146,41 @@ img.line {
   bottom: 0;
   left: -104px;
 }
+
+.logo-card {
+  width: 18.1875rem;
+  height: 9rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 0.625rem;
+  background: #fff;
+}
+
+.scroll-container .gap {
+  width: 2rem; /* Set the width of the gap */
+  flex-shrink: 0; /* Prevent the spacer element from shrinking */
+}
+
+.scroll-container {
+  width: 100vw;
+  overflow-x: scroll;
+  white-space: nowrap;
+  background-color: #f4fbff;
+  display: flex;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-disabler {
+  width: 100vw;
+  height: 34.4px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.0001);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

@@ -1,7 +1,5 @@
 import React from "react";
 import hero from "./assets/img/hero-img.png";
-import logo from "./assets/img/logo.png";
-import Button from "./components/utils/Button";
 import BenefitCard from "./components/utils/BenefitCard";
 import CourseCard from "./components/utils/CourseCard";
 import thumbnailImg from "./assets/img/course-thumbnail.png";
@@ -11,75 +9,21 @@ import mentor2 from "./assets/img/mentor-2.png";
 import linkedinIcon from "./assets/img/linkedin-icon.svg";
 import igIcon from "./assets/img/ig-icon.svg";
 import line from "./assets/img/line.png";
+import okoce from "./assets/img/company-logo/okoce.png";
+import kemen from "./assets/img/company-logo/kemen.png";
+import soft from "./assets/img/company-logo/soft.png";
+import unimas from "./assets/img/company-logo/unimas.png";
+import Button from "./components/utils/Button";
+
 import TestiCard from "./components/utils/TestiCard";
 import chatModel from "./assets/img/chat-model.png";
-
 const goToCourseSection = () => {
   const courseSection = document.getElementById("courses");
   courseSection.scrollIntoView({ behavior: "smooth" });
 };
-
 function Home() {
   return (
     <>
-      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-        <div className="container">
-          <div className="d-flex flex-grow-1">
-            <span className="w-100 d-lg-none d-block"></span>
-            {/* <a className="navbar-brand d-none d-lg-inline-block" href="#">
-              {" "}
-              Navbar 6{" "}
-            </a> */}
-            <img src={logo} alt="logo" width={150} />
-
-            {/* <a
-              className="navbar-brand-two mx-auto d-lg-none d-inline-block"
-              href="#"
-            >
-              <img src={logo} alt="logo" width={150} />
-            </a> */}
-            <div className="w-100 text-right">
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#myNavbar"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-            </div>
-          </div>
-          <div
-            className="collapse navbar-collapse flex-grow-1 text-right"
-            id="myNavbar"
-          >
-            <ul className="navbar-nav ms-auto flex-nowrap">
-              <li className="nav-item">
-                <a href="#" className="nav-link m-2 menu-item nav-active">
-                  Course
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link m-2 menu-item">
-                  Tentang
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link m-2 menu-item">
-                  Corporate Training
-                </a>
-              </li>
-              <li className="nav-item d-flex align-items-center">
-                <Button
-                  text="Login"
-                  onClick={goToCourseSection}
-                  isSmall={true}
-                />
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
       <section className="container" id="hero">
         <div className="row justify-content-between vh-100 align-items-center">
           <div className="col-md-6 pe-5 ">
@@ -160,7 +104,7 @@ function Home() {
               Berbagai macam pilihan dengan metode belajar yang cocok buat kamu
             </p>
           </div>
-          <div className="d-flex">
+          <div className="d-flex gap-3 mb-3">
             <Button text="Terbaru" onClick={() => {}} />
             <Button text="Webinar" onClick={() => {}} />
             <Button text="Course" onClick={() => {}} />
@@ -285,6 +229,37 @@ function Home() {
                     <p>Bersertifikat Internasional</p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="partner">
+        <div className="container">
+          <div className="heading text-center">
+            <h1 className="section-title text-dark">Partner Kami</h1>
+          </div>
+          <div className="row">
+            <div className="col">
+              <div class="logo-card">
+                <img src={okoce} alt="Logo 2" />
+              </div>
+            </div>
+            <div className="col">
+              <div class="logo-card">
+                <img src={kemen} alt="Logo 2" />
+              </div>
+            </div>
+
+            <div className="col">
+              <div class="logo-card">
+                <img src={soft} alt="Logo 2" />
+              </div>
+            </div>
+
+            <div className="col">
+              <div class="logo-card">
+                <img src={unimas} alt="Logo 2" />
               </div>
             </div>
           </div>

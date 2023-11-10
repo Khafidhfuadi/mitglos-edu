@@ -136,41 +136,11 @@
 }
 
 .course-card .img-thumb {
-  width: 400px;
+  width: 100%;
   height: 215px;
 
   border-radius: 25px;
   object-fit: cover;
-}
-
-.pill-container {
-  position: absolute;
-  bottom: 10px;
-  left: 12px;
-
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.pill {
-  display: flex;
-  padding: 7px 17px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  border-radius: 25px;
-  background: #f8f8f8;
-  -webkit-box-shadow: 10px -3px 41px 1px rgba(46, 46, 46, 0.63);
-  box-shadow: 10px -3px 41px 1px rgba(46, 46, 46, 0.63);
-
-  color: #fe753f;
-  font-family: SklowBold;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%; /* 14px */
 }
 
 .container-text {
@@ -255,7 +225,7 @@
 }
 
 .testi-card {
-  width: 600px;
+  width: 100%;
   height: auto;
   background: #f8f8f8;
   border-radius: 25px;
@@ -268,11 +238,17 @@ img.quote-icon {
   position: absolute;
 }
 
+.testi-card .profile-pict {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
 .testi-card .content {
   padding-top: 70px;
   color: #1e1e1e;
   font-family: SklowMedium;
-  font-size: 24px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 160%; /* 38.4px */
@@ -287,7 +263,7 @@ img.quote-icon {
 .profile-testi {
   color: #1e1e1e;
   font-family: SklowMedium;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 160%; /* 25.6px */
@@ -321,4 +297,56 @@ footer .line {
   height: 1px;
   opacity: 0.6;
   background: #000;
+}
+
+@media only screen and (max-width: 768px) {
+  .course-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .course-card .img-thumb {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+  }
+}
+
+/* Mobile-specific styles using media queries */
+@media only screen and (max-width: 600px) {
+  .custom-btn {
+    padding: 12px 24px;
+    font-size: 12px;
+  }
+
+  .is-small {
+    padding: 10px 20px;
+    font-size: 10px;
+  }
+
+  .benefit-card {
+    width: 100%;
+    margin: 10px;
+  }
+
+  .container-text {
+    padding: 16px;
+  }
+
+  .testi-card {
+    width: 100%;
+    padding: 0 20px 20px 20px;
+    margin-bottom: 20px;
+  }
+
+  footer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 50px;
+  }
+
+  footer .line {
+    margin: 20px 0;
+  }
 }

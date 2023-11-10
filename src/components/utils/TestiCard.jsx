@@ -2,22 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./component.css";
 import quoteIcon from "../../assets/img/quote_icon.svg";
-import profilePict from "../../assets/img/profile-pict.png";
+// import profilePict from "../../assets/img/profile-pict.png";
 
 const TestiCard = ({ content, imagePath, name, position }) => {
+  console.log("imagePath", imagePath);
   return (
     <div className="testi-card">
       <img className="quote-icon" src={quoteIcon} alt="" />
-      <div className="content">
-        MITGLOS EDU sangat{" "}
-        <strong>membantu karir saya menjadi lebih baik</strong>. Terimakasih
-        MITGLOS EDU, Semoga makin sukses terus!!! Aamiin!{" "}
-      </div>
+      <div className="content">{content}</div>
       <div className="profile-testi">
-        <img src={profilePict} alt="" />
+        <img
+          src={require(`../../assets/img/testi-profil/` + imagePath)}
+          alt=""
+          className="profile-pict rounded-circle"
+        />
         <div className="profile-testi-desc">
-          <div className="name">Akbar Jajaj</div>
-          <div className="position">Tukang Somay</div>
+          <div className="name">{name}</div>
+          <div className="position">{position}</div>
         </div>
       </div>
     </div>

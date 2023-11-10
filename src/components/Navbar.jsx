@@ -8,11 +8,9 @@ function Navbar() {
       <div className="container">
         <div className="d-flex flex-grow-1">
           <span className="w-100 d-lg-none d-block"></span>
-          {/* <a className="navbar-brand d-none d-lg-inline-block" href="#">
-          {" "}
-          Navbar 6{" "}
-        </a> */}
-          <img src={logo} alt="logo" width={150} />
+          <a className="navbar-brand d-none d-lg-inline-block" href="/">
+            <img src={logo} alt="logo" width={150} />
+          </a>
 
           {/* <a
           className="navbar-brand-two mx-auto d-lg-none d-inline-block"

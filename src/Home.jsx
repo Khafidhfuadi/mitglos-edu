@@ -17,15 +17,17 @@ import Button from "./components/utils/Button";
 
 import TestiCard from "./components/utils/TestiCard";
 import chatModel from "./assets/img/chat-model.png";
+import { useNavigate } from "react-router-dom";
 const goToCourseSection = () => {
   const courseSection = document.getElementById("courses");
   courseSection.scrollIntoView({ behavior: "smooth" });
 };
 function Home() {
+  const nav = useNavigate();
   return (
     <>
       <section className="container" id="hero">
-        <div className="row justify-content-between vh-100 align-items-center">
+        <div className="row justify-content-between align-items-center">
           <div className="col-md-6 pe-5 ">
             <div className="hero-title">
               Raih Karir Impianmu Bersama MITGLOS EDU
@@ -57,37 +59,37 @@ function Home() {
             </p>
           </div>
           <div className="row align-items-center benefit-container">
-            <div className="col d-flex justify-content-center">
+            <div className="col  d-flex justify-content-center align-items-stretch">
               <BenefitCard
                 head="Berstandar internasional"
                 desc="Kurikulum, materi, dan mentor sudah berstandar dan bersertifikat internasional"
               />
             </div>
-            <div className="col d-flex justify-content-center">
+            <div className="col  d-flex justify-content-center align-items-stretch">
               <BenefitCard
                 head="Sertifikat internasional"
                 desc="Sertifikat pelatihan yang diperoleh adalah sertifikat internasional, sehingga dapat menunjang karir lebih baik"
               />
             </div>
-            <div className="col d-flex justify-content-center">
+            <div className="col  d-flex justify-content-center align-items-stretch">
               <BenefitCard
                 head="Konsultasi karir"
                 desc="Setelah lulus dari pelatihan akan ada konsultasi karir hingga memperoleh pekerjaan impian"
               />
             </div>
-            <div className="col d-flex justify-content-center">
+            <div className="col  d-flex justify-content-center align-items-stretch">
               <BenefitCard
                 head="Harga terjangkau"
                 desc="Harga jauh lebih murah dengan fasilitas yang sama dari bootcamp lainnya"
               />
             </div>
-            <div className="col d-flex justify-content-center">
+            <div className="col  d-flex justify-content-center align-items-stretch">
               <BenefitCard
                 head="Belajar fleksibel"
                 desc="Belajar di mana pun, bebas pilih kelas dan waktu sesuai dengan yang diinginkan"
               />
             </div>
-            <div className="col d-flex justify-content-center">
+            <div className="col  d-flex justify-content-center align-items-stretch">
               <BenefitCard
                 head="Lifetime akses"
                 desc="Modul dan rekaman kelas dapat diakses selamanya setelah lulus dari pelatihan"
@@ -110,7 +112,7 @@ function Home() {
             <Button text="Course" onClick={() => {}} />
           </div>
           <div className="row ">
-            <div className="col d-flex align-items-stretch">
+            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
               <CourseCard
                 thumbnailImg={thumbnailImg}
                 kategori="Webinar"
@@ -121,10 +123,28 @@ function Home() {
                 ringkasan="Belajar menjadi fullstack developer dengan menggunakan bahasa pemrograman javascript"
                 hargaAsli="1000000"
                 discount="50"
+                isPromo={true}
+                onClick={() => {
+                  nav("/detail-course");
+                }}
+              />
+            </div>
+            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
+              <CourseCard
+                thumbnailImg={thumbnailImg}
+                kategori="Webinar"
+                periode="12 Juli 2021"
+                pertemuan="1 Pertemuan"
+                tempat="Online"
+                judul="Belajar Menjadi Fullstack Developer"
+                ringkasan="Belajar menjadi elajar menjadi fullstack developer dengelajar menjadi fullstack developer deng menggunakan bahasa pemrograman javascript"
+                hargaAsli="1000000"
+                discount="50"
+                isPromo={false}
                 onClick={() => {}}
               />
             </div>
-            <div className="col d-flex align-items-stretch">
+            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
               <CourseCard
                 thumbnailImg={thumbnailImg}
                 kategori="Webinar"
@@ -138,21 +158,7 @@ function Home() {
                 onClick={() => {}}
               />
             </div>
-            <div className="col d-flex align-items-stretch">
-              <CourseCard
-                thumbnailImg={thumbnailImg}
-                kategori="Webinar"
-                periode="12 Juli 2021"
-                pertemuan="1 Pertemuan"
-                tempat="Online"
-                judul="Belajar Menjadi Fullstack Developer"
-                ringkasan="Belajar menjadi elajar menjadi fullstack developer dengelajar menjadi fullstack developer deng menggunakan bahasa pemrograman javascript"
-                hargaAsli="1000000"
-                discount="50"
-                onClick={() => {}}
-              />
-            </div>
-            <div className="col d-flex align-items-stretch">
+            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
               <CourseCard
                 thumbnailImg={thumbnailImg}
                 kategori="Webinar"
@@ -172,12 +178,12 @@ function Home() {
       <section id="mentor">
         <div className="container">
           <div className="row">
-            <div className="col-6 d-flex justify-content-center align-items-center text-center">
-              <img className="line" src={line} alt="" />
+            <div className="col-12 col-md-6 d-flex justify-content-center align-items-center text-center">
+              {/* <img className="line" src={line} alt="" /> */}
               <div className="row">
                 <div className="col-6">
                   <div className="mentor-profile">
-                    <img src={mentor1} alt="" />
+                    <img className="mentor-img" src={mentor1} alt="" />
                     <p className="mentor-name">Kak Yuni</p>
                     <p className="position">Fullstack Developer</p>
                     <div className="socmed">
@@ -192,7 +198,7 @@ function Home() {
                 </div>
                 <div className="col-6">
                   <div className="mentor-profile">
-                    <img src={mentor2} alt="" />
+                    <img className="mentor-img" src={mentor2} alt="" />
                     <p className="mentor-name">Kak Yuni</p>
                     <p className="position">Fullstack Developer</p>
                     <div className="socmed">
@@ -207,8 +213,8 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-6">
-              <div className="heading p-0 ps-5">
+            <div className="col-12 col-md-6">
+              <div className="heading p-0 ps-md-5">
                 <h1 className="section-title">
                   Belajar Intensif bersama Mentor Terbaik Kami
                 </h1>
@@ -240,24 +246,24 @@ function Home() {
             <h1 className="section-title text-dark">Partner Kami</h1>
           </div>
           <div className="row">
-            <div className="col">
+            <div className="col-6 col-md-3">
               <div class="logo-card">
                 <img src={okoce} alt="Logo 2" />
               </div>
             </div>
-            <div className="col">
+            <div className="col-6 col-md-3">
               <div class="logo-card">
                 <img src={kemen} alt="Logo 2" />
               </div>
             </div>
 
-            <div className="col">
+            <div className="col-6 col-md-3">
               <div class="logo-card">
                 <img src={soft} alt="Logo 2" />
               </div>
             </div>
 
-            <div className="col">
+            <div className="col-6 col-md-3">
               <div class="logo-card">
                 <img src={unimas} alt="Logo 2" />
               </div>
@@ -271,18 +277,28 @@ function Home() {
             <h1 className="section-title">Apa Kata Mereka?</h1>
           </div>
           <div className="row">
-            <div className="col d-flex align-items-stretch">
-              <TestiCard />
+            <div className="col col-md-6 col-12 d-flex align-items-stretch justify-content-center">
+              <TestiCard
+                content="Acara ini memberikan wawasan yang sangat berharga, saya belajar banyak mengenai strategi kreatif, konten yang menarik, cara meningkatkan visibilitas produk atau layanan melalui TikTok. Saya sangat merekomendasikan ini kepada siapa pun untuk meningkatkan kemampuan pemasaran digital, terutama melalui TikTok."
+                imagePath="diva.jpeg"
+                name="Diva Annisa"
+                position="Peserta Seminar TikTok Marketing"
+              />
             </div>
-            <div className="col d-flex align-items-stretch">
-              <TestiCard />
+            <div className="col col-md-6 col-12 d-flex align-items-stretch justify-content-center">
+              <TestiCard
+                content="Acara ini membantu para pelaku UMKM untuk bisa beradaptasi di era modern ini. Dijelaskan mengenai teknis yang dilakukan, algoritma, dan cara agar sebuah pelaku UMKM dapat bertahan di era digital. Pemateri sangat informatif, materi mudah difahami dan applicable."
+                imagePath="iqbal.jpeg"
+                name="Iqbal Kurniawan"
+                position="Peserta Seminar TikTok Marketing"
+              />
             </div>
           </div>
         </div>
       </section>
       <div className="container">
         <div className="contact">
-          <img src={chatModel} alt="" width={550} />
+          {/* <img src={chatModel} alt="" /> */}
           <div className="text-container">
             <div className="sub-title">Masih Bingung Pilih Yang Mana?</div>
             <div className="heading">Tanyakan Via Chat Kepada Kami</div>

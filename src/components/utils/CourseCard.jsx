@@ -15,21 +15,30 @@ const CourseCard = ({
   ringkasan,
   hargaAsli,
   discount,
+  isPromo,
   onClick,
 }) => {
   const hargaDiskon = hargaAsli - (hargaAsli * discount) / 100;
   const formatHarga = (harga) => {
     return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
+  const isPromoStyle = isPromo ? { display: "block" } : { display: "none" };
+
   return (
     <div className="course-card" onClick={onClick}>
       <div className="img-container">
-        <div className="discount-timer d-flex align-items-center">
+        <div
+          style={isPromoStyle}
+          className="discount-timer d-flex align-items-center"
+        >
           <img src={lightningIcon} alt="" />
           <span>Diskon 64% 13:09:18</span>
         </div>
         <img className="img-thumb" src={thumbnailImg} alt="" />
-        <div className="pill-container">
+        <div
+          className="pill-container"
+          style={{ position: "absolute", bottom: "10px", left: "12px" }}
+        >
           <div className="pill">{kategori}</div>
           <div className="pill">
             <img src={calenderIcon} alt="" width={14} />

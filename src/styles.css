@@ -246,6 +246,40 @@ section#detail .profile-picture {
   object-fit: cover;
 }
 
+/* login page */
+
+.auth-banner {
+  object-fit: cover;
+  border-radius: 30px;
+  height: 90%;
+  padding-left: 32px;
+}
+
+.button-group-container {
+  display: flex;
+  width: auto;
+  height: 66.822px;
+  gap: 16px;
+  border-radius: 30px;
+  background-color: #9dd2f9;
+  padding: 12px;
+  justify-content: center;
+}
+
+input {
+  height: 45px;
+}
+
+label {
+  font-family: Outfit;
+}
+
+.alert {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 /* responsive */
 
 @media screen and (max-width: 768px) {
@@ -378,6 +412,28 @@ section#detail .profile-picture {
 
   .benefit-container {
     padding: 0;
+  }
+
+  .auth-banner {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 90%;
+    height: 40%;
+    padding-left: 20px;
+  }
+
+  .auth-banner h1 {
+    font-size: 24px;
+    line-height: 140%; /* 33.6px */
+  }
+
+  .auth-banner h5 {
+    font-size: 12px;
+    line-height: 140%; /* 16.8px */
+  }
+
+  input {
+    height: 35px;
   }
 }
 

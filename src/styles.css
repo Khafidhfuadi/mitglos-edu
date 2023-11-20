@@ -280,6 +280,10 @@ label {
   right: 20px;
 }
 
+h1 {
+  font-family: Outfit;
+}
+
 /* responsive */
 
 @media screen and (max-width: 768px) {

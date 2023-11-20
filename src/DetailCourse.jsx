@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import bg from "./assets/img/course-thumbnail.png";
 import Button from "./components/utils/Button";
 import mentor1 from "./assets/img/mentor-1.png";
@@ -14,6 +14,10 @@ function DetailCourse() {
     position: "relative", // Add this line to make positioning adjustments
     padding: "20px", // Add padding for inner shadow
   };
+
+  useEffect(() => {
+    document.title = "Detail Course | MITGLOS EDU";
+  });
 
   return (
     <div className="container mt-5">

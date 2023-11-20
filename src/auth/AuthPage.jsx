@@ -38,10 +38,11 @@ function AuthPage({ handleLogin }) {
     try {
       const data = await loginCheck(emailLogin, passwordLogin);
       handleLogin(data);
-      console.log("success");
 
-      // go to home page
-      navigate("/");
+      console.log("success");
+      setSuccessMessage("Login berhasil!");
+      setShowAlert(true);
+      navigate("/dashboard");
     } catch (error) {
       console.error(error);
       setErrorMessage("");
@@ -58,12 +59,6 @@ function AuthPage({ handleLogin }) {
       // setErrorMessage(error.response?.data?.message || "An error occurred.");
       setShowAlert(true);
     }
-  };
-
-  const banner = {
-    // backgroundImage: `url(${bg})`,
-    background: `linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent), url(${authBanner}) center/cover no-repeat`,
-    borderRadius: "30px",
   };
 
   const handleSubmitRegister = async (e) => {
@@ -102,6 +97,12 @@ function AuthPage({ handleLogin }) {
       // setErrorMessage(error.response?.data?.message || "An error occurred.");
       setShowAlert(true);
     }
+  };
+
+  const banner = {
+    // backgroundImage: `url(${bg})`,
+    background: `linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent), url(${authBanner}) center/cover no-repeat`,
+    borderRadius: "30px",
   };
   return (
     <>

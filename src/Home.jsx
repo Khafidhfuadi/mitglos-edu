@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import hero from "./assets/img/hero-img.png";
 import BenefitCard from "./components/utils/BenefitCard";
 import CourseCard from "./components/utils/CourseCard";
@@ -24,6 +24,9 @@ const goToCourseSection = () => {
 };
 function Home() {
   const nav = useNavigate();
+  useEffect(() => {
+    document.title = "Home | MITGLOS EDU";
+  });
   return (
     <>
       <section className="container" id="hero">

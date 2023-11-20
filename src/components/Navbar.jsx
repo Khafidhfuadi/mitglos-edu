@@ -3,7 +3,7 @@ import logo from "../assets/img/logo.png";
 import Button from "./utils/Button";
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar(props) {
   let navigate = useNavigate();
   const loginPage = () => {
     let path = `auth`;
@@ -59,9 +59,9 @@ function Navbar() {
               <li className="nav-item d-flex align-items-center">
                 <Button
                   type="button"
-                  text="Login"
+                  text={props.user ? "Logout" : "Login"}
                   isSmall={true}
-                  onClick={loginPage}
+                  onClick={props.user ? props.handleLogout : loginPage}
                 />
 
                 {/* <button

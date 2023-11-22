@@ -1,22 +1,32 @@
 import React from "react";
 import logo from "../../assets/img/logo.png";
 
+import { Link } from "react-router-dom";
+
 function AdminNavbar(props) {
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
-        <div class="container">
-          <a class="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+        <div className="container">
+          <Link className="navbar-brand" to="/dashboard">
             Admin Dashboard | <img src={logo} width="80px" alt="logo" />
-          </a>
-          <button class="navbar-toggler" type="button" data-togle="collapse">
-            <span class="navbar-toggler-icon"></span>
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-togle="collapse"
+          >
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <ul class="navbar-nav ml-auto pt-2 pb-2">
-            <li class="nav-item ml-4">
-              <a class="btn text-light" onClick={props.handleLogout}>
-                Log Out{" "}
-              </a>
+          <ul className="navbar-nav ml-auto pt-2 pb-2">
+            <li className="nav-item ml-4">
+              <Link
+                className="btn text-light"
+                onClick={props.handleLogout}
+                to="#"
+              >
+                Log Out
+              </Link>
             </li>
           </ul>
         </div>

@@ -10,7 +10,8 @@ import NotFound from "./NotFound";
 import PrivateRoute from "./auth/PrivateRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import AddService from "./admin/addService";
+import AddService from "./admin/AddService";
+import AddMentor from "./admin/AddMentor";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -67,11 +68,20 @@ function App() {
           element={<AuthPage handleLogin={handleLogin} />}
         />
         <Route exact path="/" element={<PrivateRoute user={user} />}>
-          <Route exact path="/dashboard" element={<Dashboard user={user} />} />
+          <Route
+            exact
+            path="/dashboard"
+            element={<Dashboard user={user} handleLogout={handleLogout} />}
+          />
           <Route
             exact
             path="/add-service"
-            element={<AddService user={user} />}
+            element={<AddService user={user} handleLogout={handleLogout} />}
+          />
+          <Route
+            exact
+            path="/add-mentor"
+            element={<AddMentor user={user} handleLogout={handleLogout} />}
           />
         </Route>
         <Route path="*" element={<NotFound />} />

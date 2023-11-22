@@ -54,30 +54,6 @@
   position: relative;
 }
 
-.header {
-  border-radius: 20px;
-  background: #f0c932;
-  padding: 13px 0 13px 20px;
-
-  color: #1e1e1e;
-  font-family: Outfit;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 130%; /* 26px */
-}
-
-.description {
-  padding: 16px 20px 12px 20px;
-
-  color: #2489d3;
-  font-family: Sklow;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 160%; /* 24px */
-}
-
 .benefit-card svg {
   position: absolute;
   bottom: 0;

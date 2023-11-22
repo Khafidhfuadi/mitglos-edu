@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withAuthAdmin } from "../auth/RouteAccess";
 import Button from "../components/utils/Button";
 import { useNavigate } from "react-router-dom";
+import { fetchMentors, fetchServices } from "../components/utils/Constants";
 
-const AdminDashboard = ({ user }) => {
+const AdminDashboard = ({ user, handleLogout }) => {
   let navigate = useNavigate();
   const goToAddService = () => {
     let path = `/add-service`;
     navigate(path);
   };
+  // go to add mentor
+  const goToAddMentor = () => {
+    let path = `/add-mentor`;
+    navigate(path);
+  };
+
+  const [services, setServices] = React.useState([]);
+  const [mentors, setMentors] = React.useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetchServices();
+      setServices(response);
+      const responseMentor = await fetchMentors();
+      setMentors(responseMentor);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    document.title = "Dashboard";
+    fetchData();
+  });
+
   return (
     <>
       <div className="container mt-5">
@@ -20,23 +46,12 @@ const AdminDashboard = ({ user }) => {
             </p>
           </div>
         </div>
-        {/* <?php
-                    if (isset($_SESSION['alert'])) {
-                    ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?php echo $_SESSION['alert'] ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <?php
-                    }
-                    unset($_SESSION['alert']);
 
-                    ?> */}
         <div className="mt-5 mb-2 d-flex justify-content-between">
           <h1>Daftar Layanan Aktif</h1>
-          <Button text="Tambah Layanan" isSmall onClick={goToAddService} />
+          <Button text="Tambah Layanan" onClick={goToAddService} />
         </div>
-        <form action="index.php" method="get">
+        {/* <form action="index.php" method="get">
           <div class="row justify-content-end">
             <h5>Cari : </h5>
             <div class="col form">
@@ -72,20 +87,112 @@ const AdminDashboard = ({ user }) => {
               </div>
             </div>
           </div>
-        </form>
+        </form> */}
 
         <table class="table mt-3">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Nama Produk</th>
+              <th scope="col">Nama Layanan</th>
               <th scope="col">Kuota Pendaftar</th>
-              <th scope="col">Harga Produk</th>
+              <th scope="col">Harga</th>
               <th scope="col">Kategori</th>
               <th scope="col" class="text-center">
                 Aksi
               </th>
             </tr>
+            {services &&
+              services.map((service, index) => (
+                <tr key={service.id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{service.judul}</td>
+                  <td>{service.kuota}</td>
+                  <td>{service.harga}</td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        service.kategori?.name === "Webinar"
+                          ? "bg-primary"
+                          : "bg-success"
+                      }`}
+                    >
+                      {service.kategori?.name}
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary btn-sm me-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Detail
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-success btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </thead>
+        </table>
+
+        <div className="mt-5 mb-2 d-flex justify-content-between">
+          <h1>Daftar Mentor</h1>
+          <Button text="Tambah Mentor" onClick={goToAddMentor} />
+        </div>
+
+        <table class="table mt-3">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama Lengkap</th>
+              <th scope="col">Posisi</th>
+              <th scope="col">LinkedIn</th>
+              <th scope="col" class="text-center">
+                Aksi
+              </th>
+            </tr>
+            {mentors &&
+              mentors.map((mentor, index) => (
+                <tr key={mentor.id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{mentor.nama_lengkap}</td>
+                  <td>{mentor.position}</td>
+                  <td>
+                    <a
+                      href={mentor.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {mentor.linkedin}
+                    </a>
+                  </td>
+                  <td class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary btn-sm me-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Detail
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-success btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </thead>
         </table>
       </div>

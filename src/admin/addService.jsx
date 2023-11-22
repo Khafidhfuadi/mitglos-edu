@@ -19,6 +19,26 @@ const AddServicePage = () => {
   const [previewImg, setPreviewImg] = React.useState();
   const [fileSizeError, setFileSizeError] = React.useState(false);
 
+  // Add a state to track if the category is "Webinar"
+  const [isWebinar, setIsWebinar] = React.useState(false);
+
+  const handleCategoryChange = (value) => {
+    setCat_id(value);
+
+    // Check if the selected category is "Webinar"
+    if (value === "2") {
+      setIsWebinar(true);
+      // Set default values for Webinar
+      setPertemuan("1");
+      setTempat("Zoom Cloud Meetings");
+    } else {
+      setIsWebinar(false);
+      // Reset values for other categories if needed
+      setPertemuan("");
+      setTempat("");
+    }
+  };
+
   function handlePreview(e) {
     const file = e.target.files[0];
 
@@ -38,7 +58,7 @@ const AddServicePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //check if all fields are filled
+    // Check if all required fields are filled
     if (
       namaProduk === "" ||
       cat_id === "" ||
@@ -75,13 +95,11 @@ const AddServicePage = () => {
     } catch (error) {
       console.log(error);
       setErrorMessage("");
-      // custom error message by status code
       if (error.response?.status === 500) {
         setErrorMessage("Kesalahan server.");
       } else {
         setErrorMessage("Terjadi kesalahan.");
       }
-      // setErrorMessage(error.response?.data?.message || "An error occurred.");
       setShowAlert(true);
     }
   };
@@ -102,7 +120,7 @@ const AddServicePage = () => {
     <>
       {showAlert && (
         <div
-          class={`alert alert-${
+          className={`alert alert-${
             errorMessage ? "danger" : "success"
           } alert-dismissible fade show`}
           role="alert"
@@ -110,7 +128,7 @@ const AddServicePage = () => {
           {errorMessage || successMessage}
           <button
             type="button"
-            class="btn-close"
+            className="btn-close"
             data-bs-dismiss="alert"
             aria-label="Close"
           ></button>
@@ -118,134 +136,144 @@ const AddServicePage = () => {
       )}
       <div className="container mt-5 mb-5">
         <h1>Add Service</h1>
-        <div class="card">
-          <div class="card-body">
+        <div className="card">
+          <div className="card-body">
             <form
-              class="form-container"
+              className="form-container"
               method="POST"
-              enctype="multipart/form-data"
+              encType="multipart/form-data"
             >
-              <div class="container px-4">
-                <div class="row gx-5">
-                  <div class="col">
-                    <div class="form-floating mb-3">
+              <div className="container px-4">
+                <div className="row gx-5">
+                  <div className="col">
+                    <div className="form-floating mb-3">
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="namaProduk"
                         name="namaProduk"
                         placeholder="Nama Produk"
                         onChange={(e) => setNamaProduk(e.target.value)}
                       />
-                      <label for="namaProduk">Judul Produk</label>
-                      <div id="emailHelp" class="form-text">
+                      <label htmlFor="namaProduk">Judul Produk</label>
+                      <div id="emailHelp" className="form-text">
                         cth penamaan : Digital Marketing
                       </div>
                     </div>
                     <div className="row mb-3">
                       <div className="col">
-                        {" "}
-                        <div class="form-floating ">
+                        <div className="form-floating ">
                           <select
                             name="cat_id"
-                            class="form-select"
+                            className="form-select"
                             aria-label="KategoriP"
-                            onChange={(e) => setCat_id(e.target.value)}
+                            onChange={(e) =>
+                              handleCategoryChange(e.target.value)
+                            }
                           >
                             <option defaultValue="-">-</option>
                             <option value="2">Webinar</option>
                             <option value="1">Course</option>
                           </select>
-                          <label for="kategoriP">Kategori Produk</label>
+                          <label htmlFor="kategoriP">Kategori Produk</label>
+                          {isWebinar && (
+                            <div className="form-text">
+                              Jika kategori webinar, maka jumlah pertemuan dan
+                              tempat pelaksanaan akan diisi secara otomatis.
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="col">
-                        {" "}
-                        <div class="form-floating ">
+                        <div className="form-floating ">
                           <input
                             type="number"
-                            class="form-control"
+                            className="form-control"
                             id="kuota"
                             name="kuota"
                             placeholder="kuota"
                             onChange={(e) => setKuota(e.target.value)}
                           />
-                          <label for="kuota">Kuota Pendaftar</label>
+                          <label htmlFor="kuota">Kuota Pendaftar</label>
                         </div>
                       </div>
                     </div>
 
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-floating mb-3">
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-floating mb-3">
                           <input
                             type="datetime-local"
-                            class="form-control"
+                            className="form-control"
                             id="periode"
                             name="periode"
                             placeholder="periode Pelaksanaan"
                             onChange={(e) => setPeriode(e.target.value)}
                           />
-                          <label for="periode">Periode</label>
+                          <label htmlFor="periode">Periode</label>
                         </div>
                       </div>
-                      <div class="col">
-                        <div class="form-floating mb-3">
+                      <div className="col">
+                        <div className="form-floating mb-3">
                           <input
                             type="number"
-                            class="form-control"
+                            className="form-control"
                             id="pertemuan"
                             name="pertemuan"
                             placeholder="pertemuan"
                             onChange={(e) => setPertemuan(e.target.value)}
+                            disabled={isWebinar} // Disable the field for Webinar
                           />
-                          <label for="pertemuan">Jumlah Pertemuan</label>
+                          <label htmlFor="pertemuan">Jumlah Pertemuan</label>
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-floating mt-3 mb-3">
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-floating mt-3 mb-3">
                           <input
                             type="text"
-                            class="form-control"
+                            className="form-control"
                             id="tempat"
                             name="tempat"
                             placeholder="tempat Pelaksanaan"
                             onChange={(e) => setTempat(e.target.value)}
+                            disabled={isWebinar} // Disable the field for Webinar
                           />
-                          <label for="tempat">Tempat Pelaksanaan </label>
+                          <label htmlFor="tempat">Tempat Pelaksanaan </label>
                         </div>
                       </div>
-                      <div class="col">
-                        <div class="form-floating mt-3 mb-3">
+                      <div className="col">
+                        <div className="form-floating mt-3 mb-3">
                           <input
                             type="number"
-                            class="form-control"
+                            className="form-control"
                             id="harga"
                             name="harga"
                             placeholder="harga Pelaksanaan"
                             onChange={(e) => setHarga(e.target.value)}
                           />
-                          <label for="harga">Harga</label>
+                          <label htmlFor="harga">Harga</label>
                         </div>
                       </div>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div className="form-floating mb-3">
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="ringkasan"
                         name="ringkasan"
                         placeholder="Ringkasan"
                         onChange={(e) => setRingkasan(e.target.value)}
                       />
-                      <label for="ringkasan">Ringkasan</label>
+                      <label htmlFor="ringkasan">Ringkasan</label>
                     </div>
 
-                    <div class="mt-3 mb-3">
-                      <label for="gambarProduk">Gambar Thumbnail Produk</label>
-                      <div class="text-secondary fw-light">
+                    <div className="mt-3 mb-3">
+                      <label htmlFor="gambarProduk">
+                        Gambar Thumbnail Produk
+                      </label>
+                      <div className="text-secondary fw-light">
                         <p>Ketentuan : </p>
                         <ul>
                           <li>Format file : PNG, JPG, JPEG</li>
@@ -254,18 +282,18 @@ const AddServicePage = () => {
                       </div>
                       <input
                         type="file"
-                        class="form-control"
+                        className="form-control"
                         id="gambarProduk"
                         name="gambarProduk"
                         accept=".png, .jpg, .jpeg"
                         onChange={handlePreview}
                       />
                       {fileSizeError && (
-                        <div class="text-danger fw-light">
+                        <div className="text-danger fw-light">
                           Ukuran file terlalu besar. Maksimal 1MB.
                         </div>
                       )}
-                      <label className="mt-3 mt-3" for="preview">
+                      <label className="mt-3 mt-3" htmlFor="preview">
                         Preview :
                       </label>
                       <br />
@@ -273,11 +301,11 @@ const AddServicePage = () => {
                     </div>
                   </div>
 
-                  <div class="d-flex justify-content-end">
+                  <div className="d-flex justify-content-end">
                     <button
                       type="submit"
                       name="submit"
-                      class="btn btn-primary btn-block mt-3"
+                      className="btn btn-primary btn-block mt-3"
                       onClick={handleSubmit}
                     >
                       Submit

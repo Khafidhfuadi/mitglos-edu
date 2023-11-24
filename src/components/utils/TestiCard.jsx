@@ -5,7 +5,6 @@ import quoteIcon from "../../assets/img/quote_icon.svg";
 // import profilePict from "../../assets/img/profile-pict.png";
 
 const TestiCard = ({ content, imagePath, name, position }) => {
-  console.log("imagePath", imagePath);
   return (
     <div className="testi-card">
       <img className="quote-icon" src={quoteIcon} alt="" />

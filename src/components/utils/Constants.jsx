@@ -30,20 +30,44 @@ export const register = async (email, nama_depan, nama_belakang, password) => {
   }
 };
 
+//register user from google auth
+export const registerGoogle = async (
+  email,
+  nama_depan,
+  nama_belakang,
+  password
+) => {
+  try {
+    const response = await api.post("/api/register", {
+      email,
+      nama_depan,
+      nama_belakang,
+      password,
+      role_id: 1,
+    });
+    return response.data;
+  } catch (error) {
+    return false;
+  }
+};
+
+// checkUserEmail
+export const checkUserExists = async (email) => {
+  axios({
+    method: "get",
+    url: `http://localhost:5000/api/user/check?email=${email}`,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const fetchServices = async () => {
   try {
-    const authToken = sessionStorage.getItem("token");
-
-    if (!authToken) {
-      // Handle case where auth token is not available
-      console.log("Auth token not found");
-      return;
-    }
-    const response = await api.get("/api/product?product_status=true", {
-      headers: {
-        "auth-token": authToken,
-      },
-    });
+    const response = await api.get("/api/product?product_status=true");
 
     return response.data;
   } catch (error) {
@@ -118,6 +142,17 @@ export const addService = async (
     return response.data;
   } catch (error) {
     errMsg = error.response?.data?.error || "An error occurred.";
+    throw error;
+  }
+};
+
+//fetch detail service
+export const fetchDetailService = async (id) => {
+  try {
+    const response = await api.get(`/api/product/${id}`);
+
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };

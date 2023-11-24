@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { withAuthAdmin } from "../auth/RouteAccess";
 import { addService } from "../components/utils/Constants";
+import { useNavigate } from "react-router-dom";
 
 const AddServicePage = () => {
   const [namaProduk, setNamaProduk] = React.useState("");
@@ -21,6 +22,7 @@ const AddServicePage = () => {
 
   // Add a state to track if the category is "Webinar"
   const [isWebinar, setIsWebinar] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleCategoryChange = (value) => {
     setCat_id(value);
@@ -88,6 +90,7 @@ const AddServicePage = () => {
         thumbnail_img
       );
 
+      navigate("dashboard");
       setSuccessMessage(
         "Layanan Berhasil Dibuat, Silahkan lengkapi detail layanan!"
       );

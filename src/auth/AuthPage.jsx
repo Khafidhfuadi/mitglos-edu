@@ -3,7 +3,13 @@ import authBanner from "../assets/img/auth-banner.jpg";
 import logo from "../assets/img/logo.png";
 import Button from "../components/utils/Button";
 import { useNavigate } from "react-router-dom";
-import { loginCheck, register } from "../components/utils/Constants";
+import {
+  checkUserExists,
+  loginCheck,
+  register,
+} from "../components/utils/Constants";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 function AuthPage({ handleLogin }) {
   const [emailLogin, setEmailLogin] = useState("");
@@ -160,34 +166,50 @@ function AuthPage({ handleLogin }) {
             </div>
 
             {loginForm ? (
-              <form className="w-75 mt-5">
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">
-                    Email address
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control rounded-pill"
-                    id="email"
-                    aria-describedby="emailHelp"
-                    onChange={(e) => setEmailLogin(e.target.value)}
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    class="form-control rounded-pill"
-                    id="password"
-                    onChange={(e) => setPasswordLogin(e.target.value)}
-                  />
-                </div>
-                <div className="float-end">
-                  <Button text="Login" onClick={handleSubmitLogin} />
-                </div>
-              </form>
+              <>
+                {/* <GoogleLogin
+                  onSuccess={async (credentialResponse) => {
+                    const decode = jwtDecode(credentialResponse.credential);
+                    console.log(decode);
+                    const userExists = await checkUserExists(decode?.email);
+                    console.log(userExists);
+                    if (userExists?.response?.status === 404) {
+                      setErrorMessage("Akun tidak ditemukan.");
+                    }
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                /> */}
+                <form className="w-75 mt-5">
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      class="form-control rounded-pill"
+                      id="email"
+                      aria-describedby="emailHelp"
+                      onChange={(e) => setEmailLogin(e.target.value)}
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      class="form-control rounded-pill"
+                      id="password"
+                      onChange={(e) => setPasswordLogin(e.target.value)}
+                    />
+                  </div>
+                  <div className="float-end">
+                    <Button text="Login" onClick={handleSubmitLogin} />
+                  </div>
+                </form>
+              </>
             ) : (
               <form className="w-75 mt-5">
                 <div class="mb-3">

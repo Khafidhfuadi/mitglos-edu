@@ -18,14 +18,27 @@ import Button from "./components/utils/Button";
 import TestiCard from "./components/utils/TestiCard";
 import chatModel from "./assets/img/chat-model.png";
 import { useNavigate } from "react-router-dom";
+import { fetchServices } from "./components/utils/Constants";
 const goToCourseSection = () => {
   const courseSection = document.getElementById("courses");
   courseSection.scrollIntoView({ behavior: "smooth" });
 };
 function Home() {
   const nav = useNavigate();
+
+  const [services, setServices] = React.useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await fetchServices();
+      setServices(response?.products);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     document.title = "Home | MITGLOS EDU";
+    fetchData();
   });
   return (
     <>
@@ -115,66 +128,29 @@ function Home() {
             <Button text="Course" onClick={() => {}} />
           </div>
           <div className="row ">
-            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
-              <CourseCard
-                thumbnailImg={thumbnailImg}
-                kategori="Webinar"
-                periode="12 Juli 2021"
-                pertemuan="1 Pertemuan"
-                tempat="Online"
-                judul="Belajar Menjadi Fullstack Developer"
-                ringkasan="Belajar menjadi fullstack developer dengan menggunakan bahasa pemrograman javascript"
-                hargaAsli="1000000"
-                discount="50"
-                isPromo={true}
-                onClick={() => {
-                  nav("/detail-course");
-                }}
-              />
-            </div>
-            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
-              <CourseCard
-                thumbnailImg={thumbnailImg}
-                kategori="Webinar"
-                periode="12 Juli 2021"
-                pertemuan="1 Pertemuan"
-                tempat="Online"
-                judul="Belajar Menjadi Fullstack Developer"
-                ringkasan="Belajar menjadi elajar menjadi fullstack developer dengelajar menjadi fullstack developer deng menggunakan bahasa pemrograman javascript"
-                hargaAsli="1000000"
-                discount="50"
-                isPromo={false}
-                onClick={() => {}}
-              />
-            </div>
-            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
-              <CourseCard
-                thumbnailImg={thumbnailImg}
-                kategori="Webinar"
-                periode="12 Juli 2021"
-                pertemuan="1 Pertemuan"
-                tempat="Online"
-                judul="Belajar Menjadi Fullstack Developer"
-                ringkasan="Belajar menjadi elajar menjadi fullstack developer dengelajar menjadi fullstack developer deng menggunakan bahasa pemrograman javascript"
-                hargaAsli="1000000"
-                discount="50"
-                onClick={() => {}}
-              />
-            </div>
-            <div className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center">
-              <CourseCard
-                thumbnailImg={thumbnailImg}
-                kategori="Webinar"
-                periode="12 Juli 2021"
-                pertemuan="1 Pertemuan"
-                tempat="Online"
-                judul="Belajar Menjadi Fullstack Developer"
-                ringkasan="Belajar menjadi fullstack developer deng an menggunakan bahasa pemrograman javascript"
-                hargaAsli="1000000"
-                discount="50"
-                onClick={() => {}}
-              />
-            </div>
+            {services &&
+              services.map((service, index) => (
+                <div
+                  id={index}
+                  className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center"
+                >
+                  <CourseCard
+                    thumbnailImg={service?.thumbnail_img}
+                    kategori={service?.kategori?.name}
+                    periode={service?.periode}
+                    pertemuan={service?.pertemuan}
+                    tempat={service?.tempat}
+                    judul={service?.judul}
+                    ringkasan={service?.ringkasan}
+                    hargaAsli={service?.harga}
+                    discount="50"
+                    isPromo={true}
+                    onClick={() => {
+                      nav(`/course/${service?.id}`);
+                    }}
+                  />
+                </div>
+              ))}
           </div>
         </div>
       </section>

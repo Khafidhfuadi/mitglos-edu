@@ -4,7 +4,7 @@ import Home from "./Home";
 
 import DetailCourse from "./DetailCourse";
 import AuthPage from "./auth/AuthPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import NotFound from "./NotFound";
 import PrivateRoute from "./auth/PrivateRoute";
@@ -53,7 +53,7 @@ function App() {
         />
         <Route
           exact
-          path="/detail-course/"
+          path="/course/:id"
           element={
             <>
               <Navbar user={user} handleLogout={handleLogout} />

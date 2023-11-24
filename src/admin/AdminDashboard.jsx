@@ -3,6 +3,7 @@ import { withAuthAdmin } from "../auth/RouteAccess";
 import Button from "../components/utils/Button";
 import { useNavigate } from "react-router-dom";
 import { fetchMentors, fetchServices } from "../components/utils/Constants";
+import { ToastContainer } from "react-toastify";
 
 const AdminDashboard = ({ user, handleLogout }) => {
   let navigate = useNavigate();
@@ -22,7 +23,7 @@ const AdminDashboard = ({ user, handleLogout }) => {
   const fetchData = async () => {
     try {
       const response = await fetchServices();
-      setServices(response);
+      setServices(response?.products);
       const responseMentor = await fetchMentors();
       setMentors(responseMentor);
     } catch (error) {
@@ -55,6 +56,7 @@ const AdminDashboard = ({ user, handleLogout }) => {
 
   return (
     <>
+      <ToastContainer />
       <div className="container mt-5">
         <div className="card">
           <div className="card-body">
@@ -70,12 +72,12 @@ const AdminDashboard = ({ user, handleLogout }) => {
           <Button text="Tambah Layanan" onClick={goToAddService} />
         </div>
         {/* <form action="index.php" method="get">
-          <div class="row justify-content-end">
+          <div className="row justify-content-end">
             <h5>Cari : </h5>
-            <div class="col form">
+            <div className="col form">
               <select
                 name="search-type"
-                class="form-select"
+                className="form-select"
                 aria-label="KategoriP"
               >
                 <option value="all" selected>
@@ -84,18 +86,18 @@ const AdminDashboard = ({ user, handleLogout }) => {
                 <option value="nama_produk">Nama Produk</option>
               </select>
             </div>
-            <div class="col-4">
-              <div class="input-group d-flex align-items-center">
+            <div className="col-4">
+              <div className="input-group d-flex align-items-center">
                 <input
-                  class="form-control border-end-0 border rounded-pill"
+                  className="form-control border-end-0 border rounded-pill"
                   placeholder="Cari Produk..."
                   type="text"
                   name="cari"
                   id="example-search-input"
                 />
-                <span class="input-group-append ms-2">
+                <span className="input-group-append ms-2">
                   <button
-                    class="btn btn-outline-secondary bg-white text-dark border-start-0 border rounded-pill ms-n3"
+                    className="btn btn-outline-secondary bg-white text-dark border-start-0 border rounded-pill ms-n3"
                     type="submit"
                     value="cari"
                   >
@@ -107,15 +109,15 @@ const AdminDashboard = ({ user, handleLogout }) => {
           </div>
         </form> */}
 
-        <table class="table mt-3">
-          <thead class="thead-dark">
+        <table className="table mt-3">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nama Layanan</th>
               <th scope="col">Kuota Pendaftar</th>
               <th scope="col">Harga</th>
               <th scope="col">Kategori</th>
-              <th scope="col" class="text-center">
+              <th scope="col" className="text-center">
                 Aksi
               </th>
             </tr>
@@ -137,10 +139,10 @@ const AdminDashboard = ({ user, handleLogout }) => {
                       {service.kategori?.name}
                     </span>
                   </td>
-                  <td class="text-center">
+                  <td className="text-center">
                     <button
                       type="button"
-                      class="btn btn-outline-primary btn-sm me-2"
+                      className="btn btn-outline-primary btn-sm me-2"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >
@@ -148,7 +150,7 @@ const AdminDashboard = ({ user, handleLogout }) => {
                     </button>
                     <button
                       type="button"
-                      class="btn btn-outline-success btn-sm"
+                      className="btn btn-outline-success btn-sm"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >
@@ -165,14 +167,14 @@ const AdminDashboard = ({ user, handleLogout }) => {
           <Button text="Tambah Mentor" onClick={goToAddMentor} />
         </div>
 
-        <table class="table mt-3">
-          <thead class="thead-dark">
+        <table className="table mt-3">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nama Lengkap</th>
               <th scope="col">Posisi</th>
               <th scope="col">LinkedIn</th>
-              <th scope="col" class="text-center">
+              <th scope="col" className="text-center">
                 Aksi
               </th>
             </tr>
@@ -191,10 +193,10 @@ const AdminDashboard = ({ user, handleLogout }) => {
                       {mentor.linkedin}
                     </a>
                   </td>
-                  <td class="text-center">
+                  <td className="text-center">
                     <button
                       type="button"
-                      class="btn btn-outline-primary btn-sm me-2"
+                      className="btn btn-outline-primary btn-sm me-2"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >
@@ -202,7 +204,7 @@ const AdminDashboard = ({ user, handleLogout }) => {
                     </button>
                     <button
                       type="button"
-                      class="btn btn-outline-success btn-sm"
+                      className="btn btn-outline-success btn-sm"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >

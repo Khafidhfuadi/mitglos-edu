@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 import { withAuthAdmin } from "../auth/RouteAccess";
 import { addMentor } from "../components/utils/Constants";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddMentorPage = ({ handleLogout }) => {
   const [namaProduk, setNamaLengkap] = React.useState("");
   const [position, setPosition] = React.useState("");
   const [linkedin, setLinkedin] = React.useState("");
   const [profilePict, setProfilePict] = React.useState("");
-  const [showAlert, setShowAlert] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
-  const [successMessage, setSuccessMessage] = React.useState("");
-  // const [imgTitle, setImgTitle] = React.useState("");
   const [previewImg, setPreviewImg] = React.useState("");
   const [fileSizeError, setFileSizeError] = React.useState(false);
+  const navigate = useNavigate();
 
   function handlePreview(e) {
     const file = e.target.files[0];
@@ -41,60 +40,28 @@ const AddMentorPage = ({ handleLogout }) => {
       linkedin === "" ||
       profilePict === ""
     ) {
-      setErrorMessage("Silahkan isi semua field");
-      setShowAlert(true);
+      toast.error("Semua field harus diisi");
       return;
     }
 
     try {
       addMentor(namaProduk, position, linkedin, profilePict);
 
-      setSuccessMessage("Mentor berhasil dibuat!");
-      setShowAlert(true);
+      navigate("/dashboard");
+      toast.success("Mentor berhasil ditambahkan");
     } catch (error) {
       console.log(error);
-      setErrorMessage("");
-      // custom error message by status code
       if (error.response?.status === 500) {
-        setErrorMessage("Kesalahan server.");
+        toast.error("Terjadi kesalahan pada server.");
       } else {
-        setErrorMessage("Terjadi kesalahan.");
+        toast.error(error.response?.data?.error || "Terjadi kesalahan.");
       }
-      // setErrorMessage(error.response?.data?.message || "An error occurred.");
-      setShowAlert(true);
     }
   };
 
-  useEffect(() => {
-    let timeout;
-    if (showAlert) {
-      timeout = setTimeout(() => {
-        setShowAlert(false);
-        setErrorMessage(""); // Clear the error message after hiding the alert
-        setSuccessMessage("");
-      }, 5000);
-    }
-    return () => clearTimeout(timeout);
-  }, [showAlert]);
-
   return (
     <>
-      {showAlert && (
-        <div
-          class={`alert alert-${
-            errorMessage ? "danger" : "success"
-          } alert-dismissible fade show`}
-          role="alert"
-        >
-          {errorMessage || successMessage}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-      )}
+      <ToastContainer />
       <div className="container mt-5 mb-5">
         <h1>Tambah Mentor</h1>
         <div class="card">

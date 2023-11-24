@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/img/logo.png";
 import Button from "./utils/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar(props) {
   let navigate = useNavigate();
@@ -15,9 +15,9 @@ function Navbar(props) {
         <div className="container">
           <div className="d-flex flex-grow-1">
             <span className="w-100 d-lg-none d-block"></span>
-            <a className="navbar-brand d-none d-lg-inline-block" href="/">
+            <Link className="navbar-brand d-none d-lg-inline-block" to="/">
               <img src={logo} alt="logo" width={150} />
-            </a>
+            </Link>
 
             {/* <a
           className="navbar-brand-two mx-auto d-lg-none d-inline-block"

@@ -24,6 +24,15 @@ const CourseCard = ({
   };
   const isPromoStyle = isPromo ? { display: "block" } : { display: "none" };
 
+  // format date to dd - mm - yyyy
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const ye = new Intl.DateTimeFormat("id-ID", { year: "numeric" }).format(d);
+    const mo = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(d);
+    const da = new Intl.DateTimeFormat("id-ID", { day: "2-digit" }).format(d);
+    return `${da} ${mo} ${ye}`;
+  };
+
   return (
     <div className="course-card" onClick={onClick}>
       <div className="img-container">
@@ -34,7 +43,11 @@ const CourseCard = ({
           <img src={lightningIcon} alt="" />
           <span>Diskon 64% 13:09:18</span>
         </div>
-        <img className="img-thumb" src={thumbnailImg} alt="" />
+        <img
+          className="img-thumb"
+          src={`http://localhost:5000/uploads/` + thumbnailImg}
+          alt=""
+        />
         <div
           className="pill-container"
           style={{ position: "absolute", bottom: "10px", left: "12px" }}
@@ -42,13 +55,13 @@ const CourseCard = ({
           <div className="pill">{kategori}</div>
           <div className="pill">
             <img src={calenderIcon} alt="" width={14} />
-            {periode}
+            {formatDate(periode)}
           </div>
         </div>
       </div>
       <div className="container-text">
         <p>
-          {pertemuan} | {tempat}
+          {pertemuan} Pertemuan | {tempat}
         </p>
         <h3>{judul}</h3>
         <p className="ringkasan">{ringkasan}</p>

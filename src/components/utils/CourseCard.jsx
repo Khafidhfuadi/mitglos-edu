@@ -26,10 +26,23 @@ const CourseCard = ({
 
   // format date to dd - mm - yyyy
   const formatDate = (date) => {
-    const d = new Date(date);
-    const ye = new Intl.DateTimeFormat("id-ID", { year: "numeric" }).format(d);
-    const mo = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(d);
-    const da = new Intl.DateTimeFormat("id-ID", { day: "2-digit" }).format(d);
+    const parsedDate = new Date(date);
+
+    if (isNaN(parsedDate.getTime())) {
+      // Handle the case where the date is not valid
+      return "Invalid Date";
+    }
+
+    const ye = new Intl.DateTimeFormat("id-ID", { year: "numeric" }).format(
+      parsedDate
+    );
+    const mo = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(
+      parsedDate
+    );
+    const da = new Intl.DateTimeFormat("id-ID", { day: "2-digit" }).format(
+      parsedDate
+    );
+
     return `${da} ${mo} ${ye}`;
   };
 

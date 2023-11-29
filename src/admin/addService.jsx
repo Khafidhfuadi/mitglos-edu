@@ -88,7 +88,11 @@ const AddServicePage = () => {
       );
 
       navigate("/dashboard");
-      toast.success("Layanan berhasil ditambahkan");
+      setTimeout(() => {
+        toast.success(
+          "Layanan berhasil ditambahkan. Silahkan melengkapi Detail Layanan!"
+        );
+      }, 1);
     } catch (error) {
       console.log(error);
       if (error.response?.status === 500) {
@@ -99,11 +103,26 @@ const AddServicePage = () => {
     }
   };
 
+  const MAX_RINGKASAN_LENGTH = 225;
+
+  const handleRingkasanChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (inputValue.length > MAX_RINGKASAN_LENGTH) {
+      // Truncate the input if it exceeds the maximum length
+      toast.warning("Ringkasan tidak boleh lebih dari 225 karakter");
+
+      setRingkasan(inputValue.slice(0, MAX_RINGKASAN_LENGTH));
+    } else {
+      setRingkasan(inputValue);
+    }
+  };
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
+
       <div className="container mt-5 mb-5">
-        <h1>Add Service</h1>
+        <h1>Tambah Layanan</h1>
         <div className="card">
           <div className="card-body">
             <form
@@ -232,9 +251,12 @@ const AddServicePage = () => {
                         id="ringkasan"
                         name="ringkasan"
                         placeholder="Ringkasan"
-                        onChange={(e) => setRingkasan(e.target.value)}
+                        onChange={handleRingkasanChange}
                       />
                       <label htmlFor="ringkasan">Ringkasan</label>
+                      <div id="emailHelp" className="form-text">
+                        Sisa karakter : {ringkasan.length}/225
+                      </div>
                     </div>
 
                     <div className="mt-3 mb-3">
@@ -273,7 +295,7 @@ const AddServicePage = () => {
                     <button
                       type="submit"
                       name="submit"
-                      className="btn btn-primary btn-block mt-3"
+                      className="btn btn-primary btn-block mt-3 outfit"
                       onClick={handleSubmit}
                     >
                       Submit

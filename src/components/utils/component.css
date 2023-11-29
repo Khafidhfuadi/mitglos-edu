@@ -16,6 +16,12 @@
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 28px */
+  /* disabled */
+}
+
+.disabled-btn {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .custom-btn:hover {
@@ -130,7 +136,7 @@
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
-  line-height: 160%; /* 24px */
+  line-height: 160%;
 }
 
 .container-text h3 {
@@ -145,10 +151,9 @@
 
 .ringkasan {
   color: #f8f8f8;
-  font-family: Sklow;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 700;
+  font-family: SklowMedium;
+  font-size: 12px;
+  /* font-weight: 700; */
   line-height: 160%; /* 24px */
   margin: 0;
 }

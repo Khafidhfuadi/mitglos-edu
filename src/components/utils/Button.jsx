@@ -7,11 +7,14 @@ const Button = ({ text, onClick, disabled, isOutline, isSmall }) => {
     <div
       className={`custom-btn ${isOutline ? "outline" : ""} ${
         isSmall ? "is-small" : ""
-      }`}
+      } ${disabled ? "disabled-btn" : ""}`}
       onClick={onClick}
-      disabled={disabled}
     >
-      {text}
+      {text === "Daftar Sekarang" && disabled ? (
+        <>Kamu Sudah Mendaftar</>
+      ) : (
+        text
+      )}
     </div>
   );
 };

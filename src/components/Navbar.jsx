@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Navbar(props) {
   let navigate = useNavigate();
   const loginPage = () => {
-    let path = `auth`;
+    let path = `/auth`;
     navigate(path);
   };
   return (

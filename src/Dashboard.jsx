@@ -6,6 +6,7 @@ const Dashboard = ({ user, handleLogout }) => {
   useEffect(() => {
     document.title = "Dashboard";
   });
+
   return (
     <>
       {user && user?.role?.name === "user" ? (

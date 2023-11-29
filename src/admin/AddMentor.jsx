@@ -48,7 +48,9 @@ const AddMentorPage = ({ handleLogout }) => {
       addMentor(namaProduk, position, linkedin, profilePict);
 
       navigate("/dashboard");
-      toast.success("Mentor berhasil ditambahkan");
+      setTimeout(() => {
+        toast.success("Mentor berhasil ditambahkan");
+      }, 1);
     } catch (error) {
       console.log(error);
       if (error.response?.status === 500) {
@@ -61,7 +63,7 @@ const AddMentorPage = ({ handleLogout }) => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position="bottom-right" className="outfit" />
       <div className="container mt-5 mb-5">
         <h1>Tambah Mentor</h1>
         <div class="card">
@@ -153,7 +155,7 @@ const AddMentorPage = ({ handleLogout }) => {
                     <button
                       type="submit"
                       name="submit"
-                      class="btn btn-primary btn-block mt-3"
+                      class="btn btn-primary btn-block mt-3 outfit"
                       onClick={handleSubmit}
                     >
                       Submit

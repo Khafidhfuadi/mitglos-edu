@@ -4,6 +4,7 @@ import "./component.css";
 // import thumbnail from "../../assets/img/course-thumbnail.png";
 import calenderIcon from "../../assets/img/calender.svg";
 import lightningIcon from "../../assets/img/lightning.svg";
+import { formatDate } from "./Constants";
 
 const CourseCard = ({
   thumbnailImg,
@@ -25,26 +26,6 @@ const CourseCard = ({
   const isPromoStyle = isPromo ? { display: "block" } : { display: "none" };
 
   // format date to dd - mm - yyyy
-  const formatDate = (date) => {
-    const parsedDate = new Date(date);
-
-    if (isNaN(parsedDate.getTime())) {
-      // Handle the case where the date is not valid
-      return "Invalid Date";
-    }
-
-    const ye = new Intl.DateTimeFormat("id-ID", { year: "numeric" }).format(
-      parsedDate
-    );
-    const mo = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(
-      parsedDate
-    );
-    const da = new Intl.DateTimeFormat("id-ID", { day: "2-digit" }).format(
-      parsedDate
-    );
-
-    return `${da} ${mo} ${ye}`;
-  };
 
   return (
     <div className="course-card" onClick={onClick}>
@@ -77,7 +58,7 @@ const CourseCard = ({
           {pertemuan} Pertemuan | {tempat}
         </p>
         <h3>{judul}</h3>
-        <p className="ringkasan">{ringkasan}</p>
+        <div className="ringkasan">{ringkasan}</div>
         <div className="discount-container">
           <span>Rp.{formatHarga(hargaAsli)}</span>
           <div className="discount">{discount}%</div>

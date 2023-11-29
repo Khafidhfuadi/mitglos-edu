@@ -6,6 +6,74 @@ export const api = axios.create({
   baseURL: API_URL,
 });
 
+export const formatRupiah = (angka) => {
+  let number_string = angka.toString().replace(/[^,\d]/g, ""),
+    split = number_string.split(","),
+    sisa = split[0].length % 3,
+    rupiah = split[0].substr(0, sisa),
+    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  // tambahkan titik jika yang di input sudah menjadi angka ribuan
+  if (ribuan) {
+    let separator = sisa ? "." : "";
+    rupiah += separator + ribuan.join(".");
+  }
+
+  rupiah = split[1] !== undefined ? rupiah + "," + split[1] : rupiah;
+  return rupiah;
+};
+
+export const formatDate = (date) => {
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    // Handle the case where the date is not valid
+    return "Invalid Date";
+  }
+
+  const ye = new Intl.DateTimeFormat("id-ID", { year: "numeric" }).format(
+    parsedDate
+  );
+  const mo = new Intl.DateTimeFormat("id-ID", { month: "short" }).format(
+    parsedDate
+  );
+  const da = new Intl.DateTimeFormat("id-ID", { day: "2-digit" }).format(
+    parsedDate
+  );
+
+  return `${da} ${mo} ${ye}`;
+};
+
+export const formatDateWithDays = (date) => {
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    // Handle the case where the date is not valid
+    return "Invalid Date";
+  }
+
+  const ye = new Intl.DateTimeFormat("id-ID", { year: "numeric" }).format(
+    parsedDate
+  );
+  const mo = new Intl.DateTimeFormat("id-ID", { month: "long" }).format(
+    parsedDate
+  );
+  const da = new Intl.DateTimeFormat("id-ID", { day: "numeric" }).format(
+    parsedDate
+  );
+  const hr = new Intl.DateTimeFormat("id-ID", { hour: "numeric" }).format(
+    parsedDate
+  );
+  const min = new Intl.DateTimeFormat("id-ID", { minute: "numeric" }).format(
+    parsedDate
+  );
+  const day = new Intl.DateTimeFormat("id-ID", { weekday: "long" }).format(
+    parsedDate
+  );
+
+  return `${day} ${da} ${mo} ${ye}, ${hr}.${min}`;
+};
+
 export const loginCheck = async (email, password) => {
   try {
     const response = await api.post("/api/login", { email, password });
@@ -22,7 +90,7 @@ export const register = async (email, nama_depan, nama_belakang, password) => {
       nama_depan,
       nama_belakang,
       password,
-      role_id: 1,
+      role_id: 2,
     });
     return response.data;
   } catch (error) {
@@ -157,6 +225,42 @@ export const fetchDetailService = async (id) => {
   }
 };
 
+//create detail service
+export const addDetailService = async (
+  product_id,
+  mentor_id,
+  tentang,
+  topik
+) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.post(
+      `/api/detail-product/${product_id}`,
+      {
+        product_id,
+        mentor_id,
+        tentang,
+        topik,
+      },
+      {
+        headers: {
+          "auth-token": authToken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //add mentor
 export const addMentor = async (
   nama_lengkap,
@@ -186,6 +290,100 @@ export const addMentor = async (
         "Content-Type": "multipart/form-data", // Set the content type for form data
       },
     });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetch mentors
+export const fetchMentor = async () => {
+  try {
+    const response = await api.get("/api/mentor");
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// get all transactions
+export const fetchTransactions = async () => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.get("/api/transaction", {
+      headers: {
+        "auth-token": authToken,
+        // Add other headers if needed
+      },
+    });
+
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//get transaction by id_user && product_id
+export const checkTransaction = async (user_id, product_id) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.get(
+      `/api/transaction?user_id=${user_id}&product_id=${product_id}`,
+      {
+        headers: {
+          "auth-token": authToken,
+          // Add other headers if needed
+        },
+      }
+    );
+
+    return response.data.isTransaksiExist;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// post transaction
+export const postTransaction = async (product_id, user_id) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.post(
+      "/api/transaction",
+      {
+        product_id,
+        user_id,
+        status: "done",
+      },
+      {
+        headers: {
+          "auth-token": authToken,
+          // Add other headers if needed
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {

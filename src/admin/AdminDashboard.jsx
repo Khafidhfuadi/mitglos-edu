@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
 import { withAuthAdmin } from "../auth/RouteAccess";
 import Button from "../components/utils/Button";
-import { useNavigate } from "react-router-dom";
-import { fetchMentors, fetchServices } from "../components/utils/Constants";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  fetchMentors,
+  fetchServices,
+  fetchTransactions,
+  formatRupiah,
+} from "../components/utils/Constants";
 import { ToastContainer } from "react-toastify";
 
-const AdminDashboard = ({ user, handleLogout }) => {
+const AdminDashboard = ({ user, handleLogout, randomGreetings }) => {
   let navigate = useNavigate();
   const goToAddService = () => {
     let path = `/add-service`;
@@ -19,6 +24,11 @@ const AdminDashboard = ({ user, handleLogout }) => {
 
   const [services, setServices] = React.useState([]);
   const [mentors, setMentors] = React.useState([]);
+  const [greeting, setGreeting] = React.useState("");
+  const [transaction, setTransaction] = React.useState([]);
+  const greet = sessionStorage.getItem("greeting");
+
+  //fetch greeting from session storage
 
   const fetchData = async () => {
     try {
@@ -26,6 +36,9 @@ const AdminDashboard = ({ user, handleLogout }) => {
       setServices(response?.products);
       const responseMentor = await fetchMentors();
       setMentors(responseMentor);
+      const responseTransaction = await fetchTransactions();
+      setTransaction(responseTransaction);
+      // setGreeting(greet);
     } catch (error) {
       console.error(error);
     }
@@ -36,39 +49,79 @@ const AdminDashboard = ({ user, handleLogout }) => {
     fetchData();
   });
 
-  // format rupiah
-  const formatRupiah = (angka) => {
-    let number_string = angka.toString().replace(/[^,\d]/g, ""),
-      split = number_string.split(","),
-      sisa = split[0].length % 3,
-      rupiah = split[0].substr(0, sisa),
-      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-    // tambahkan titik jika yang di input sudah menjadi angka ribuan
-    if (ribuan) {
-      let separator = sisa ? "." : "";
-      rupiah += separator + ribuan.join(".");
-    }
-
-    rupiah = split[1] !== undefined ? rupiah + "," + split[1] : rupiah;
-    return rupiah;
-  };
-
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
+
       <div className="container mt-5">
         <div className="card">
           <div className="card-body">
-            <h1>Admin Dashboard</h1>
-            <p>
-              Welcome to the admin dashboard , <b>{user?.name}</b> !
-            </p>
+            <h1>Dashboard Admin</h1>
+            {/* <p>
+              Gimana harimu, MinGlos <b>{user?.name}</b>?
+            </p> */}
+            <p dangerouslySetInnerHTML={{ __html: greet }}></p>
           </div>
         </div>
 
         <div className="mt-5 mb-2 d-flex justify-content-between">
-          <h1>Daftar Layanan Aktif</h1>
+          <h1>
+            Daftar Transaksi <i class="fa-solid fa-shopping-cart"></i>
+          </h1>
+          <Button text="Tambah Layanan" onClick={goToAddService} />
+        </div>
+
+        <table className="table mt-3">
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama Pendaftar</th>
+              <th scope="col">Nama Layanan</th>
+              <th scope="col">Kategori</th>
+              <th scope="col">Aksi</th>
+            </tr>
+            {transaction ? (
+              transaction.map((transaction, index) => (
+                <tr key={transaction.id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{transaction.user.nama_depan}</td>
+                  <td>{transaction.product.judul}</td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        transaction.product.kategori?.name === "Webinar"
+                          ? "bg-primary"
+                          : "bg-success"
+                      }`}
+                    >
+                      {transaction.product.kategori?.name}
+                    </span>
+                  </td>
+                  <td className="text-center">
+                    <Link
+                      type="button"
+                      className="btn btn-outline-primary btn-sm  outfit"
+                      to={""}
+                    >
+                      <i class="fa-solid fa-circle-info"></i> Detail
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  Loading...
+                </td>
+              </tr>
+            )}
+          </thead>
+        </table>
+
+        <div className="mt-5 mb-2 d-flex justify-content-between">
+          <h1>
+            Daftar Layanan Aktif <i class="fa-solid fa-layer-group"></i>
+          </h1>
           <Button text="Tambah Layanan" onClick={goToAddService} />
         </div>
         {/* <form action="index.php" method="get">
@@ -121,7 +174,7 @@ const AdminDashboard = ({ user, handleLogout }) => {
                 Aksi
               </th>
             </tr>
-            {services &&
+            {services ? (
               services.map((service, index) => (
                 <tr key={service.id}>
                   <th scope="row">{index + 1}</th>
@@ -140,30 +193,30 @@ const AdminDashboard = ({ user, handleLogout }) => {
                     </span>
                   </td>
                   <td className="text-center">
-                    <button
+                    <Link
                       type="button"
-                      className="btn btn-outline-primary btn-sm me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
+                      className="btn btn-outline-primary btn-sm  outfit"
+                      to={`/service/${service.id}`}
                     >
-                      Detail
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-outline-success btn-sm"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                    >
-                      Edit
-                    </button>
+                      <i class="fa-solid fa-circle-info"></i> Detail
+                    </Link>
                   </td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  Loading...
+                </td>
+              </tr>
+            )}
           </thead>
         </table>
 
         <div className="mt-5 mb-2 d-flex justify-content-between">
-          <h1>Daftar Mentor</h1>
+          <h1>
+            Daftar Mentor <i class="fa-solid fa-chalkboard-user"></i>
+          </h1>
           <Button text="Tambah Mentor" onClick={goToAddMentor} />
         </div>
 
@@ -178,41 +231,58 @@ const AdminDashboard = ({ user, handleLogout }) => {
                 Aksi
               </th>
             </tr>
-            {mentors &&
-              mentors.map((mentor, index) => (
-                <tr key={mentor.id}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{mentor.nama_lengkap}</td>
-                  <td>{mentor.position}</td>
-                  <td>
-                    <a
-                      href={mentor.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {mentor.linkedin}
-                    </a>
-                  </td>
-                  <td className="text-center">
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                    >
-                      Detail
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-outline-success btn-sm"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                    >
-                      Edit
-                    </button>
+
+            {mentors ? (
+              mentors.length > 0 ? (
+                mentors.map((mentor, index) => (
+                  <tr key={mentor.id}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{mentor.nama_lengkap}</td>
+                    <td>{mentor.position}</td>
+                    <td>
+                      <a
+                        href={mentor.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {mentor.linkedin}
+                      </a>
+                    </td>
+                    <td className="text-center">
+                      <Link
+                        type="button"
+                        className="btn btn-outline-primary btn-sm me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        <i class="fa-solid fa-circle-info"></i> Detail
+                      </Link>
+                      <button
+                        type="button"
+                        className="btn btn-outline-success btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        <i class="fa-solid fa-circle-edit"></i> Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center">
+                    Mentor belum tersedia. Silahkan tambahkan mentor terlebih
+                    dahulu.
                   </td>
                 </tr>
-              ))}
+              )
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  Loading...
+                </td>
+              </tr>
+            )}
           </thead>
         </table>
       </div>

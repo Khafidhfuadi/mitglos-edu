@@ -9,6 +9,12 @@ function Navbar(props) {
     let path = `/auth`;
     navigate(path);
   };
+  const dashboardPage = () => {
+    let path = `/dashboard`;
+    navigate(path);
+  };
+  // get user sessionStorage
+  const user = JSON.parse(sessionStorage.getItem("user"));
   return (
     <>
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -56,23 +62,65 @@ function Navbar(props) {
                   Corporate Training
                 </a>
               </li>
-              <li className="nav-item d-flex align-items-center">
-                <Button
-                  type="button"
-                  text={props.user ? "Logout" : "Login"}
-                  isSmall={true}
-                  onClick={props.user ? props.handleLogout : loginPage}
-                />
-
-                {/* <button
-                  type="button"
-                  class="btn custom-btn is-small"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  Launch demo modal
-                </button> */}
-              </li>
+              {user ? (
+                <>
+                  <li className="nav-item d-flex align-items-center">
+                    <Button
+                      type="button"
+                      text={"Dashboard"}
+                      isSmall={true}
+                      onClick={dashboardPage}
+                    />
+                  </li>
+                  <li class="nav-item dropdown d-flex align-items-center ms-2">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-user"></i>
+                    </a>
+                    <ul
+                      class="dropdown-menu dropdown-menu-start"
+                      aria-labelledby="navbarDropdown"
+                    >
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <i class="fas fa-sliders-h fa-fw"></i> Account
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <i class="fas fa-cog fa-fw"></i> Settings
+                        </a>
+                      </li>
+                      <li>
+                        <hr class="dropdown-divider" />
+                      </li>
+                      <li>
+                        <Link
+                          class="dropdown-item"
+                          onClick={props.handleLogout}
+                        >
+                          <i class="fas fa-sign-out-alt fa-fw"></i> Log Out
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item d-flex align-items-center">
+                  <Button
+                    type="button"
+                    text={props.user ? "Logout" : "Login"}
+                    isSmall={true}
+                    onClick={props.user ? props.handleLogout : loginPage}
+                  />
+                </li>
+              )}
             </ul>
           </div>
         </div>

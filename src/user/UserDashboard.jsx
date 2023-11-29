@@ -3,12 +3,14 @@ import { withAuthUser } from "../auth/RouteAccess";
 
 const UserDashboard = ({ user, handleLogout }) => {
   return (
-    <section>
-      <div className="container">
-        <h1>User Dashboard</h1>
-        <p>
-          Welcome to the user dashboard, <b>{user?.name}</b>!
-        </p>
+    <section className="container">
+      <div className="card">
+        <div className="card-body">
+          <h1>Dashboard User</h1>
+          <p>
+            Gimana harimu, <b>{user?.name}</b>?
+          </p>
+        </div>
       </div>
     </section>
   );

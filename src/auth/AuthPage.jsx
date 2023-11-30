@@ -2,14 +2,8 @@ import React, { useEffect, useState } from "react";
 import authBanner from "../assets/img/auth-banner.jpg";
 import logo from "../assets/img/logo.png";
 import Button from "../components/utils/Button";
-import { useNavigate } from "react-router-dom";
-import {
-  checkUserExists,
-  loginCheck,
-  register,
-} from "../components/utils/Constants";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import { Link, useNavigate } from "react-router-dom";
+import { loginCheck, register } from "../components/utils/Constants";
 import { ToastContainer, toast } from "react-toastify";
 
 function AuthPage({ handleLogin }) {
@@ -21,37 +15,34 @@ function AuthPage({ handleLogin }) {
   const [firstNameRegister, setFirstNameRegister] = useState("");
   const [lastNameRegister, setLastNameRegister] = useState("");
   const [loginForm, setLoginForm] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const navigate = useNavigate();
 
+  //check if status is verified, show toast
   useEffect(() => {
-    let timeout;
-    if (showAlert) {
-      timeout = setTimeout(() => {
-        setShowAlert(false);
-        setErrorMessage(""); // Clear the error message after hiding the alert
-        setSuccessMessage("");
-      }, 5000);
+    const queryParams = new URLSearchParams(window.location.search);
+    const status = queryParams.get("status");
+    if (status === "verified") {
+      setTimeout(() => {
+        toast.success("Akun berhasil terverifikasi. Silahkan login.");
+      }, 2000);
     }
-    return () => clearTimeout(timeout);
-  }, [showAlert]);
+  }, []);
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
+    setLoad(true);
 
     try {
       const data = await loginCheck(emailLogin, passwordLogin);
       handleLogin(data);
-
+      setLoad(false);
       console.log("success");
-      setSuccessMessage("Login berhasil!");
-      setShowAlert(true);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
+      setLoad(false);
       toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
@@ -59,10 +50,10 @@ function AuthPage({ handleLogin }) {
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
 
+    setLoad(true);
     // check if password and confirm password match
     if (passwordRegister !== passwordConfirmRegister) {
-      setErrorMessage("Password dan Konfirmasi Password tidak sesuai.");
-      setShowAlert(true);
+      toast.warning("Password dan konfirmasi password tidak sesuai.");
       return;
     }
 
@@ -75,13 +66,12 @@ function AuthPage({ handleLogin }) {
       );
       // handleLogin(data);
       console.log("success");
-
-      // go to home page
-      setSuccessMessage("Registrasi berhasil. Silahkan login.");
-      setShowAlert(true);
+      toast.success("Register berhasil!. Silahkan login untuk melanjutkan.");
+      setLoad(false);
       setLoginForm(true);
     } catch (error) {
       console.error(error);
+      setLoad(false);
       toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
@@ -191,12 +181,17 @@ function AuthPage({ handleLogin }) {
                       onClick={togglePasswordVisibility}
                     ></i>
                   </div>
+                  {/* forget password? */}
+                  <div className="text-end mb-3">
+                    <Link to={'/reset-password'}>Lupa Password?</Link>
+                  </div>
                   <div className="float-end">
                     <Button text="Login" onClick={handleSubmitLogin} />
                   </div>
                 </form>
               </>
             ) : (
+              //regist
               <form className="w-75 mt-5">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">
@@ -211,7 +206,7 @@ function AuthPage({ handleLogin }) {
                   />
                 </div>
                 <div class="row mb-3">
-                  <div class="col">
+                  <div class="col-12 col-md-6">
                     <label for="firstname" class="form-label">
                       Nama Depan
                     </label>
@@ -224,7 +219,7 @@ function AuthPage({ handleLogin }) {
                       onChange={(e) => setFirstNameRegister(e.target.value)}
                     />
                   </div>
-                  <div class="col">
+                  <div class="col-12 col-md-6 mt-3 mt-md-0">
                     <label for="lastname" class="form-label">
                       Nama Belakang
                     </label>
@@ -240,7 +235,7 @@ function AuthPage({ handleLogin }) {
                 </div>
 
                 <div class="row mb-3">
-                  <div class="col">
+                  <div class="col-12 col-md-6">
                     <label for="password" class="form-label">
                       Password
                     </label>
@@ -260,7 +255,7 @@ function AuthPage({ handleLogin }) {
                       onClick={togglePasswordVisibility}
                     ></i>
                   </div>
-                  <div class="col">
+                  <div class="col-12 col-md-6 mt-3 mt-md-0">
                     <label for="passwordConfirm" class="form-label">
                       Konfirmasi Password
                     </label>

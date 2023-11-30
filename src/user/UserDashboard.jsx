@@ -4,7 +4,9 @@ import {
   API_URL,
   fetchTransactionByUserId,
   formatDateWithDays,
+  updateEvent,
 } from "../components/utils/Constants";
+import Swal from "sweetalert2";
 
 const UserDashboard = ({ user, handleLogout }) => {
   const [eventRegistered, setEventRegistered] = React.useState([]);
@@ -20,6 +22,32 @@ const UserDashboard = ({ user, handleLogout }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const cancelEvent = (id) => {
+    Swal.fire({
+      title: "Pembatalan Event",
+      text: "Apakah anda yakin ingin membatalkan event ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await updateEvent(id, "cancel");
+          console.log(response);
+          Swal.fire(
+            "Sampai Jumpa!",
+            "Semoga Kita dapat segera bertemu!",
+            "success"
+          );
+          fetchData();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
   };
 
   useEffect(() => {
@@ -71,7 +99,12 @@ const UserDashboard = ({ user, handleLogout }) => {
                           <i class="fa-solid fa-magnifying-glass"></i> Lihat
                           Event
                         </button>
-                        <button className="btn btn-danger">
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            cancelEvent(data.id);
+                          }}
+                        >
                           <i class="fa-solid fa-xmark"></i> Batalkan
                         </button>
                       </td>

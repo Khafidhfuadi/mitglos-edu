@@ -16,6 +16,8 @@ import DetailService from "./admin/DetailService";
 import AddDetailService from "./admin/AddDetailService";
 import SuccessEmailConfirm from "./components/SuccessEmailConfirm";
 import EmailTokenExpired from "./components/EmailTokenExpired";
+import ServicesList from "./components/ServicesList";
+import ResetPassword from "./auth/ResetPassword";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -108,13 +110,47 @@ function App() {
         />
         <Route
           exact
+          path="/services"
+          element={
+            <>
+              <Navbar user={user} handleLogout={handleLogout} />
+              <ServicesList />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          exact
           path="/success-token"
-          element={<SuccessEmailConfirm handleLogin={handleLogin} />}
+          element={
+            <>
+              <Navbar user={user} handleLogout={handleLogout} />
+              <SuccessEmailConfirm handleLogin={handleLogin} />
+              <Footer />
+            </>
+          }
         />
         <Route
           exact
           path="/expire-token"
-          element={<EmailTokenExpired handleLogin={handleLogin} />}
+          element={
+            <>
+              <Navbar user={user} handleLogout={handleLogout} />
+              <EmailTokenExpired handleLogin={handleLogin} />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          exact
+          path="/reset-password"
+          element={
+            <>
+              <Navbar user={user} handleLogout={handleLogout} />
+              <ResetPassword handleLogin={handleLogin} />
+              <Footer />
+            </>
+          }
         />
 
         <Route exact path="/" element={<PrivateRoute user={user} />}>

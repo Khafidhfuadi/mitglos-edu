@@ -17,28 +17,14 @@ import Button from "./components/utils/Button";
 
 import TestiCard from "./components/utils/TestiCard";
 import chatModel from "./assets/img/chat-model.png";
-import { useNavigate } from "react-router-dom";
-import { fetchServices } from "./components/utils/Constants";
+import ServicesList from "./components/ServicesList";
 const goToCourseSection = () => {
   const courseSection = document.getElementById("courses");
   courseSection.scrollIntoView({ behavior: "smooth" });
 };
 function Home() {
-  const nav = useNavigate();
-
-  const [services, setServices] = React.useState([]);
-  const fetchData = async () => {
-    try {
-      const response = await fetchServices();
-      setServices(response?.products);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     document.title = "Home | MITGLOS EDU";
-    fetchData();
   });
   return (
     <>
@@ -114,46 +100,7 @@ function Home() {
           </div>
         </div>
       </section>
-      <section id="courses">
-        <div className="container">
-          <div className="heading text-center text-dark">
-            <h1 className="section-title">Pilih Yang Paling Cocok Untukmu</h1>
-            <p className="sub-title">
-              Berbagai macam pilihan dengan metode belajar yang cocok buat kamu
-            </p>
-          </div>
-          <div className="d-flex gap-3 mb-3">
-            <Button text="Terbaru" onClick={() => {}} />
-            <Button text="Webinar" onClick={() => {}} />
-            <Button text="Course" onClick={() => {}} />
-          </div>
-          <div className="row ">
-            {services &&
-              services.map((service, index) => (
-                <div
-                  id={index}
-                  className="col d-flex align-items-stretch col-12 col-md-6 col-xl-4 justify-content-center"
-                >
-                  <CourseCard
-                    thumbnailImg={service?.thumbnail_img}
-                    kategori={service?.kategori?.name}
-                    periode={service?.periode}
-                    pertemuan={service?.pertemuan}
-                    tempat={service?.tempat}
-                    judul={service?.judul}
-                    ringkasan={service?.ringkasan}
-                    hargaAsli={service?.harga}
-                    discount="50"
-                    isPromo={true}
-                    onClick={() => {
-                      nav(`/course/${service?.id}`);
-                    }}
-                  />
-                </div>
-              ))}
-          </div>
-        </div>
-      </section>
+      <ServicesList />
       <section id="mentor">
         <div className="container">
           <div className="row">

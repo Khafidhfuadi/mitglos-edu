@@ -9,7 +9,7 @@ const SuccessEmailConfirm = () => {
     navigate(path);
   };
   return (
-    <section>
+    <section className="container">
       <h1>Berhasil Terkonfirmasi!</h1>
       <p>
         Silahkan login dengan akun yang telah terkonfirmasi untuk melanjutkan.

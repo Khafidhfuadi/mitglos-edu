@@ -351,7 +351,8 @@ export const fetchTransactionByUserId = async (user_id, kategori_id) => {
 
     // Filter data based on kategori_id = 2
     const filteredData = response.data.data.filter(
-      (item) => item.product.kategori_id === kategori_id
+      (item) =>
+        item.product.kategori_id === kategori_id && item.status === "progress"
     );
 
     return filteredData;
@@ -403,7 +404,37 @@ export const postTransaction = async (product_id, user_id) => {
       {
         product_id,
         user_id,
-        status: "done",
+        status: "progress",
+      },
+      {
+        headers: {
+          "auth-token": authToken,
+          // Add other headers if needed
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//update event
+export const updateEvent = async (id, status) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.put(
+      `/api/transaction/${id}`,
+      {
+        status: status,
       },
       {
         headers: {

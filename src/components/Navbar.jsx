@@ -48,9 +48,12 @@ function Navbar(props) {
           >
             <ul className="navbar-nav ms-auto flex-nowrap">
               <li className="nav-item">
-                <a href="#" className="nav-link m-2 menu-item nav-active">
+                <Link
+                  to={"/services"}
+                  className="nav-link m-2 menu-item nav-active"
+                >
                   Course
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-link m-2 menu-item">

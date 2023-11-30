@@ -278,18 +278,18 @@ label {
   font-family: Outfit;
 }
 
-.alert {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
 h1 {
   font-family: Outfit;
 }
 
 .outfit {
   font-family: Outfit;
+}
+
+.toggle-password {
+  float: right;
+  cursor: pointer;
+  margin-top: -30px;
 }
 
 /* responsive */

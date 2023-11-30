@@ -81,33 +81,41 @@ const AdminDashboard = ({ user, handleLogout, randomGreetings }) => {
               <th scope="col">Aksi</th>
             </tr>
             {transaction ? (
-              transaction.map((transaction, index) => (
-                <tr key={transaction.id}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{transaction.user.nama_depan}</td>
-                  <td>{transaction.product.judul}</td>
-                  <td>
-                    <span
-                      className={`badge ${
-                        transaction.product.kategori?.name === "Webinar"
-                          ? "bg-primary"
-                          : "bg-success"
-                      }`}
-                    >
-                      {transaction.product.kategori?.name}
-                    </span>
-                  </td>
-                  <td className="text-center">
-                    <Link
-                      type="button"
-                      className="btn btn-outline-primary btn-sm  outfit"
-                      to={""}
-                    >
-                      <i class="fa-solid fa-circle-info"></i> Detail
-                    </Link>
+              transaction.length > 0 ? (
+                transaction.map((transaction, index) => (
+                  <tr key={transaction.id}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{transaction.user?.nama_depan}</td>
+                    <td>{transaction.product.judul}</td>
+                    <td>
+                      <span
+                        className={`badge ${
+                          transaction.product.kategori?.name === "Webinar"
+                            ? "bg-primary"
+                            : "bg-success"
+                        }`}
+                      >
+                        {transaction.product.kategori?.name}
+                      </span>
+                    </td>
+                    <td className="text-center">
+                      <Link
+                        type="button"
+                        className="btn btn-outline-primary btn-sm  outfit"
+                        to={""}
+                      >
+                        <i class="fa-solid fa-circle-info"></i> Detail
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    Transaksi belum tersedia.
                   </td>
                 </tr>
-              ))
+              )
             ) : (
               <tr>
                 <td colSpan="6" className="text-center">

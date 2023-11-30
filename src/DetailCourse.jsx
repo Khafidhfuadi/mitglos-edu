@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Button from "./components/utils/Button";
 import mentor1 from "./assets/img/mentor-1.png";
 import linkedin from "./assets/img/linkedinBlue.svg";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   checkTransaction,
   fetchDetailService,
@@ -49,12 +49,6 @@ function DetailCourse() {
     fetchData();
   });
 
-  // format date from 2023-11-02T15:52 to Minggu 12 November 2023, 10.00
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -88,19 +82,21 @@ function DetailCourse() {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
       }).then((result) => {
-        if (user.role.name === "admin") {
-          Swal.fire(
-            "Gagal!",
-            "Kamu tidak bisa mendaftar karena Kamu Minglos!",
-            "error"
-          );
-          return;
-        }
-        try {
-          postTransaction(services?.id, idUser);
-          Swal.fire("Berhasil!", "Kamu berhasil mendaftar!", "success");
-        } catch (error) {
-          console.log(error);
+        if (result.isConfirmed) {
+          if (user.role.name === "admin") {
+            Swal.fire(
+              "Gagal!",
+              "Kamu tidak bisa mendaftar karena Kamu Minglos!",
+              "error"
+            );
+            return;
+          }
+          try {
+            postTransaction(services?.id, idUser);
+            Swal.fire("Berhasil!", "Kamu berhasil mendaftar!", "success");
+          } catch (error) {
+            console.log(error);
+          }
         }
       });
     }
@@ -113,6 +109,10 @@ function DetailCourse() {
             <div className="content">
               <h1 className="section-title text-white">{services?.judul}</h1>
               <div className="pill-container mt-3">
+                <div className="pill">
+                  <i class="fa-solid fa-tag"></i>
+                  {services?.kategori?.name}
+                </div>
                 <div className="pill">
                   <i class="fa-solid fa-calendar-days"></i>
                   {formatDate(services?.periode)}
@@ -139,7 +139,15 @@ function DetailCourse() {
             </div>
           </div>
         </section>
+
         <section id="detail">
+          {isT && services?.kategori?.name === "Webinar" ? (
+            <div class="alert alert-primary ms-2 me-2" role="alert">
+              <i class="fa-solid fa-circle-info"></i> Kamu Telah Terdaftar Pada
+              Webinar Ini, Silahkan Cek <Link to={"/dashboard"}>Dashboard</Link>{" "}
+              Secara Berkala Untuk Mendapatkan Link Webinar
+            </div>
+          ) : null}
           <div className="row">
             <div className="col-12 col-md-7">
               <div

@@ -10,6 +10,7 @@ import {
 } from "../components/utils/Constants";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
 
 function AuthPage({ handleLogin }) {
   const [emailLogin, setEmailLogin] = useState("");
@@ -51,19 +52,7 @@ function AuthPage({ handleLogin }) {
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
-      setErrorMessage("");
-      // custom error message by status code
-      if (error.response?.status === 401 || error.response?.status === 400) {
-        setErrorMessage("Email atau Password tidak sesuai.");
-      } else if (error.response?.status === 404) {
-        setErrorMessage("Akun tidak ditemukan.");
-      } else if (error.response?.status === 500) {
-        setErrorMessage("Kesalahan server.");
-      } else {
-        setErrorMessage("Terjadi kesalahan.");
-      }
-      // setErrorMessage(error.response?.data?.message || "An error occurred.");
-      setShowAlert(true);
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
 
@@ -93,15 +82,7 @@ function AuthPage({ handleLogin }) {
       setLoginForm(true);
     } catch (error) {
       console.error(error);
-      setErrorMessage("");
-      // custom error message by status code
-      if (error.response?.status === 500) {
-        setErrorMessage("Kesalahan server.");
-      } else {
-        setErrorMessage("Terjadi kesalahan.");
-      }
-      // setErrorMessage(error.response?.data?.message || "An error occurred.");
-      setShowAlert(true);
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
 
@@ -110,24 +91,21 @@ function AuthPage({ handleLogin }) {
     background: `linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent), url(${authBanner}) center/cover no-repeat`,
     borderRadius: "30px",
   };
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible((prevVisible) => !prevVisible);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setPasswordConfirmVisible((prevVisible) => !prevVisible);
+  };
   return (
     <>
-      {showAlert && (
-        <div
-          class={`alert alert-${
-            errorMessage ? "danger" : "success"
-          } alert-dismissible fade show`}
-          role="alert"
-        >
-          {errorMessage || successMessage}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-      )}
+      <ToastContainer position="bottom-right" />
+
       <div className="container ">
         <div className="row vh-100 d-flex justify-content-center align-items-center">
           <div
@@ -194,16 +172,24 @@ function AuthPage({ handleLogin }) {
                       onChange={(e) => setEmailLogin(e.target.value)}
                     />
                   </div>
-                  <div class="mb-3">
+                  <div className="mb-3 ">
                     <label for="exampleInputEmail1" class="form-label">
                       Password
                     </label>
                     <input
-                      type="password"
+                      type={passwordVisible ? "text" : "password"}
                       class="form-control rounded-pill"
                       id="password"
                       onChange={(e) => setPasswordLogin(e.target.value)}
                     />
+                    <i
+                      className={`toggle-password me-3  ${
+                        passwordVisible
+                          ? "fa-solid fa-lock-open"
+                          : "fa-solid fa-lock"
+                      }`}
+                      onClick={togglePasswordVisibility}
+                    ></i>
                   </div>
                   <div className="float-end">
                     <Button text="Login" onClick={handleSubmitLogin} />
@@ -259,19 +245,27 @@ function AuthPage({ handleLogin }) {
                       Password
                     </label>
                     <input
-                      type="password"
+                      type={passwordVisible ? "text" : "password"}
                       class="form-control rounded-pill"
                       placeholder="Password"
                       aria-label="Password"
                       onChange={(e) => setPasswordRegister(e.target.value)}
                     />
+                    <i
+                      className={`toggle-password me-3  ${
+                        passwordVisible
+                          ? "fa-solid fa-lock-open"
+                          : "fa-solid fa-lock"
+                      }`}
+                      onClick={togglePasswordVisibility}
+                    ></i>
                   </div>
                   <div class="col">
                     <label for="passwordConfirm" class="form-label">
                       Konfirmasi Password
                     </label>
                     <input
-                      type="password"
+                      type={passwordConfirmVisible ? "text" : "password"}
                       class="form-control rounded-pill"
                       placeholder="Konfirmasi passoword"
                       aria-label="Konfirmasi passoword"
@@ -280,6 +274,14 @@ function AuthPage({ handleLogin }) {
                         setPasswordConfirmRegister(e.target.value)
                       }
                     />
+                    <i
+                      className={`toggle-password me-3  ${
+                        passwordConfirmVisible
+                          ? "fa-solid fa-lock-open"
+                          : "fa-solid fa-lock"
+                      }`}
+                      onClick={toggleConfirmPasswordVisibility}
+                    ></i>
                   </div>
                 </div>
 

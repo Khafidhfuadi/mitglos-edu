@@ -10,11 +10,7 @@ const Button = ({ text, onClick, disabled, isOutline, isSmall }) => {
       } ${disabled ? "disabled-btn" : ""}`}
       onClick={onClick}
     >
-      {text === "Daftar Sekarang" && disabled ? (
-        <>Kamu Sudah Mendaftar</>
-      ) : (
-        text
-      )}
+      {text === "Daftar Sekarang" && disabled ? <>Sudah Terdaftar</> : text}
     </div>
   );
 };

@@ -14,6 +14,8 @@ import AddService from "./admin/AddService";
 import AddMentor from "./admin/AddMentor";
 import DetailService from "./admin/DetailService";
 import AddDetailService from "./admin/AddDetailService";
+import SuccessEmailConfirm from "./components/SuccessEmailConfirm";
+import EmailTokenExpired from "./components/EmailTokenExpired";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -104,6 +106,17 @@ function App() {
           path="/auth"
           element={<AuthPage handleLogin={handleLogin} />}
         />
+        <Route
+          exact
+          path="/success-token"
+          element={<SuccessEmailConfirm handleLogin={handleLogin} />}
+        />
+        <Route
+          exact
+          path="/expire-token"
+          element={<EmailTokenExpired handleLogin={handleLogin} />}
+        />
+
         <Route exact path="/" element={<PrivateRoute user={user} />}>
           <Route
             exact

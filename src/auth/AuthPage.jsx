@@ -191,7 +191,7 @@ function AuthPage({ handleLogin }) {
                     <Link to={"/#"}>Lupa Password?</Link>
                   </div>
                   <div className="float-end">
-                    <Button text="Login" onClick={handleSubmitComingSoon} />
+                    <Button text="Login" onClick={handleSubmitLogin} />
                   </div>
                 </form>
               </>
@@ -300,7 +300,7 @@ function AuthPage({ handleLogin }) {
                   </label>
                 </div> */}
                 <div className="float-end">
-                  <Button text="Register" onClick={handleSubmitComingSoon} />
+                  <Button text="Register" onClick={handleSubmitRegister} />
                 </div>
               </form>
             )}

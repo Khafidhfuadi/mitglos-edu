@@ -76,6 +76,11 @@ function AuthPage({ handleLogin }) {
     }
   };
 
+  const handleSubmitComingSoon = async (e) => {
+    e.preventDefault();
+    toast.warning("Coming soon Feature!");
+  };
+
   const banner = {
     // backgroundImage: `url(${bg})`,
     background: `linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent), url(${authBanner}) center/cover no-repeat`,
@@ -183,10 +188,10 @@ function AuthPage({ handleLogin }) {
                   </div>
                   {/* forget password? */}
                   <div className="text-end mb-3">
-                    <Link to={"/reset-password"}>Lupa Password?</Link>
+                    <Link to={"/#"}>Lupa Password?</Link>
                   </div>
                   <div className="float-end">
-                    <Button text="Login" onClick={handleSubmitLogin} />
+                    <Button text="Login" onClick={handleSubmitComingSoon} />
                   </div>
                 </form>
               </>
@@ -295,7 +300,7 @@ function AuthPage({ handleLogin }) {
                   </label>
                 </div> */}
                 <div className="float-end">
-                  <Button text="Register" onClick={handleSubmitRegister} />
+                  <Button text="Register" onClick={handleSubmitComingSoon} />
                 </div>
               </form>
             )}

@@ -23,20 +23,23 @@ const CourseCard = ({
   const formatHarga = (harga) => {
     return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
-  const isPromoStyle = isPromo ? { display: "block" } : { display: "none" };
+  const [isPromoStyle, setIsPromoStyle] = React.useState(() => {
+    return isPromo ? { display: "block" } : { display: "none" };
+  });
+  // const isPromoStyle = isPromo ? { display: "block" } : { display: "none" };
 
   // format date to dd - mm - yyyy
 
   return (
     <div className="course-card" onClick={onClick}>
       <div className="img-container">
-        <div
-          style={isPromoStyle}
-          className="discount-timer d-flex align-items-center"
-        >
-          <img src={lightningIcon} alt="" />
-          <span>Diskon 64% 13:09:18</span>
+        <div style={isPromoStyle}>
+          <div className="discount-timer d-flex align-items-center">
+            <img src={lightningIcon} alt="" />
+            <span>Diskon 64% 13:09:18</span>
+          </div>
         </div>
+
         <img
           className="img-thumb"
           src={`http://localhost:5000/uploads/` + thumbnailImg}
@@ -59,11 +62,14 @@ const CourseCard = ({
         </p>
         <h3>{judul}</h3>
         <div className="ringkasan">{ringkasan}</div>
-        <div className="discount-container">
-          <span>Rp.{formatHarga(hargaAsli)}</span>
-          <div className="discount">{discount}%</div>
+        <div style={isPromoStyle}>
+          <div className="discount-container">
+            <span>Rp.{formatHarga(hargaAsli)}</span>
+            <div className="discount">{discount}%</div>
+          </div>
         </div>
-        <div className="price">Rp.{formatHarga(hargaDiskon)}</div>
+
+        <div className="price mt-3">Rp.{formatHarga(hargaDiskon)}</div>
       </div>
     </div>
   );

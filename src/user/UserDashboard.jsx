@@ -7,6 +7,7 @@ import {
   updateEvent,
 } from "../components/utils/Constants";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const UserDashboard = ({ user, handleLogout }) => {
   const [eventRegistered, setEventRegistered] = React.useState([]);
@@ -59,7 +60,10 @@ const UserDashboard = ({ user, handleLogout }) => {
     <section className="container">
       <div className="card">
         <div className="card-body">
-          <h1>Dashboard User</h1>
+          <div className="d-flex justify-content-between">
+            <h1>Dashboard</h1>
+            <Link to={"/history-event"}>Histori Event</Link>
+          </div>
           <p>
             Gimana harimu, <b>{user?.name}</b>?
           </p>
@@ -71,7 +75,7 @@ const UserDashboard = ({ user, handleLogout }) => {
           <h6 className="card-subtitle mb-2 text-muted">
             Anda telah terdaftar dalam event ini.
           </h6>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr className="outfit">
                 <th scope="col">Nama</th>
@@ -83,10 +87,10 @@ const UserDashboard = ({ user, handleLogout }) => {
               {eventRegistered ? (
                 eventRegistered.length > 0 ? (
                   eventRegistered.map((data) => (
-                    <tr>
+                    <tr key={data.id}>
                       <td>
                         <a
-                          href={`${API_URL}course/${data.id}`}
+                          href={`${API_URL}course/${data.product.id}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -95,17 +99,22 @@ const UserDashboard = ({ user, handleLogout }) => {
                       </td>
                       <td>{formatDateWithDays(data.product.periode)}</td>
                       <td className="d-flex outfit gap-3">
-                        <button className="btn btn-info text-white">
-                          <i class="fa-solid fa-magnifying-glass"></i> Lihat
+                        <a
+                          className="btn btn-info text-white"
+                          href={`${API_URL}course/${data.product.id} `}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="fa-solid fa-magnifying-glass"></i> Lihat
                           Event
-                        </button>
+                        </a>
                         <button
                           className="btn btn-danger"
                           onClick={() => {
                             cancelEvent(data.id);
                           }}
                         >
-                          <i class="fa-solid fa-xmark"></i> Batalkan
+                          <i className="fa-solid fa-xmark"></i> Batalkan
                         </button>
                       </td>
                     </tr>
@@ -130,7 +139,7 @@ const UserDashboard = ({ user, handleLogout }) => {
           <h6 className="card-subtitle mb-2 text-muted">
             Anda telah terdaftar dalam kursus ini.
           </h6>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr className="outfit">
                 <th scope="col">Nama</th>
@@ -155,11 +164,16 @@ const UserDashboard = ({ user, handleLogout }) => {
                       <td>{formatDateWithDays(data.product.periode)}</td>
                       <td className="d-flex outfit gap-3">
                         <button className="btn btn-info text-white">
-                          <i class="fa-solid fa-magnifying-glass"></i> Lihat
+                          <i className="fa-solid fa-magnifying-glass"></i> Lihat
                           Kursus
                         </button>
-                        <button className="btn btn-danger">
-                          <i class="fa-solid fa-xmark"></i> Batalkan
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            cancelEvent(data.id);
+                          }}
+                        >
+                          <i className="fa-solid fa-xmark"></i> Batalkan
                         </button>
                       </td>
                     </tr>

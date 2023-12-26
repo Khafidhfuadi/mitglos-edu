@@ -119,6 +119,35 @@ export const registerGoogle = async (
   }
 };
 
+// update email
+export const updateEmail = async (id, email) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.put(
+      `/api/user/email/${id}`,
+      {
+        email,
+      },
+      {
+        headers: {
+          "auth-token": authToken,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // checkUserEmail
 export const checkUserExists = async (email) => {
   axios({
@@ -218,6 +247,29 @@ export const addService = async (
 export const fetchDetailService = async (id) => {
   try {
     const response = await api.get(`/api/product/${id}`);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetch detail user
+export const fetchDetailUser = async (id) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.get(`/api/user/${id}`, {
+      headers: {
+        "auth-token": authToken,
+      },
+    });
 
     return response.data;
   } catch (error) {
@@ -332,6 +384,32 @@ export const fetchTransactions = async () => {
   }
 };
 
+export const fetchHistoryEventUser = async (user_id, _status) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const response = await api.get(
+      `/api/transaction?user_id=${user_id}&status=${_status}`,
+      {
+        headers: {
+          "auth-token": authToken,
+          // Add other headers if needed
+        },
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const fetchTransactionByUserId = async (user_id, kategori_id) => {
   try {
     const authToken = sessionStorage.getItem("token");
@@ -382,7 +460,7 @@ export const checkTransaction = async (user_id, product_id) => {
       }
     );
 
-    return response.data.isTransaksiExist;
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -444,6 +522,70 @@ export const updateEvent = async (id, status) => {
       }
     );
 
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//forgot password
+export const forgotPassword = async (email) => {
+  try {
+    const response = await api.post("/forgot-password", {
+      email,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// reset password
+export const resetPassword = async (token, password) => {
+  try {
+    const response = await api.post("/reset-password", {
+      token,
+      newPassword: password,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//update user name
+export const updateUserName = async (id, nama_depan, nama_belakang) => {
+  try {
+    const authToken = sessionStorage.getItem("token");
+
+    if (!authToken) {
+      // Handle case where auth token is not available
+      console.log("Auth token not found");
+      return;
+    }
+
+    const updatedData = {};
+
+    if (nama_depan) {
+      updatedData.nama_depan = nama_depan;
+    }
+
+    if (nama_belakang) {
+      updatedData.nama_belakang = nama_belakang;
+    }
+
+    if (Object.keys(updatedData).length === 0) {
+      // Handle case where no data is provided for update
+      console.log("No data provided for update");
+      return;
+    }
+
+    const response = await api.put(`/api/user/name/${id}`, updatedData, {
+      headers: {
+        "auth-token": authToken,
+        // Add other headers if needed
+      },
+    });
     return response.data;
   } catch (error) {
     throw error;

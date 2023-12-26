@@ -6,13 +6,15 @@ import {
   formatRupiah,
 } from "../components/utils/Constants";
 import { withAuthAdmin } from "../auth/RouteAccess";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const AdminDetailService = () => {
   const { id } = useParams();
   const [service, setService] = useState(null);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -41,12 +43,28 @@ const AdminDetailService = () => {
       cancelButtonText: "<i class='fa fa-times'></i> Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Layanan berhasil dinonaktifkan",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        axios
+          .put(
+            `http://localhost:5000/api/product/${id}`,
+            {
+              product_status: 0,
+            },
+            {
+              headers: {
+                "auth-token": `${sessionStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((res) => {
+            navigate("/dashboard");
+            setTimeout(() => {
+              toast.success("Layanan berhasil dinonaaktifkan!");
+            }, 1);
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire("Gagal!", "Terjadi kesalahan pada server.", "error");
+          });
       }
     });
   };
@@ -75,7 +93,18 @@ const AdminDetailService = () => {
                 <i class="fa-regular fa-file"></i> Isi Detail Layanan
               </Link>
             ) : null}
-            <div className="btn outfit btn-success">
+            <div
+              className="btn outfit btn-success"
+              onClick={() => {
+                //coming soon swal
+                Swal.fire({
+                  title: "Coming Soon!",
+                  text: "Fitur ini akan segera hadir",
+                  icon: "info",
+                  confirmButtonText: "OK",
+                });
+              }}
+            >
               <i class="fa-solid fa-pen-to-square"></i> Edit Detail Layanan
             </div>
             <button

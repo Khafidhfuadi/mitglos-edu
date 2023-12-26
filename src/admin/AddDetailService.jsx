@@ -35,7 +35,7 @@ const AddDetailServicePage = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if all required fields are filled
@@ -46,7 +46,7 @@ const AddDetailServicePage = () => {
 
     try {
       console.log(id, idMentor, tentang, topik);
-      addDetailService(id, idMentor, tentang, topik);
+      const response = await addDetailService(id, idMentor, tentang, topik);
       navigate("/service/" + id);
       setTimeout(() => {
         toast.success("Detail Layanan berhasil ditambahkan");

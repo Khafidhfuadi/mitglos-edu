@@ -222,15 +222,14 @@ function Home() {
           </div>
         </div>
       </section>
-      <div className="container">
+      {/* <div className="container">
         <div className="contact">
-          {/* <img src={chatModel} alt="" /> */}
           <div className="text-container">
             <div className="sub-title">Masih Bingung Pilih Yang Mana?</div>
             <div className="heading">Tanyakan Via Chat Kepada Kami</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

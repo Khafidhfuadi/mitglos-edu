@@ -20,7 +20,7 @@ const ServicesList = () => {
   useEffect(() => {
     document.title = "Course | MITGLOS EDU";
     fetchData();
-  });
+  }, []);
   return (
     <section id="courses">
       <div className="container">
@@ -52,7 +52,7 @@ const ServicesList = () => {
                   ringkasan={service?.ringkasan}
                   hargaAsli={service?.harga}
                   discount="50"
-                  isPromo={true}
+                  isPromo={false}
                   onClick={() => {
                     nav(`/course/${service?.id}`);
                   }}

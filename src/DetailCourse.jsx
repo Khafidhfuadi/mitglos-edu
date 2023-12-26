@@ -10,6 +10,7 @@ import {
   formatDateWithDays,
   formatRupiah,
   postTransaction,
+  updateEvent,
 } from "./components/utils/Constants";
 import Swal from "sweetalert2";
 
@@ -20,34 +21,49 @@ function DetailCourse() {
   const [bgImage, setBgImage] = React.useState(""); // [1
   const user = JSON.parse(sessionStorage.getItem("user"));
   const idUser = user?.id;
-  const headerStyle = {
-    height: "500px",
-    // backgroundImage: `url(${bg})`,
-    background: `linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent), url(${bgImage}) center/cover no-repeat`,
-    borderRadius: "25px",
-    marginTop: "150px",
-    position: "relative", // Add this line to make positioning adjustments
-  };
 
   const [services, setServices] = React.useState([]);
   const [isT, setIsT] = React.useState(false);
+  const [headerStyle, setHeaderStyle] = React.useState({
+    height: "500px",
+    borderRadius: "25px",
+    marginTop: "150px",
+    position: "relative",
+  });
   const fetchData = async () => {
     try {
       const response = await fetchDetailService(id);
+      console.log(response);
       setServices(response);
-      const isTransaksiExist = await checkTransaction(idUser, services?.id);
-      setIsT(isTransaksiExist);
-      setBgImage(`http://localhost:5000/uploads/` + services?.thumbnail_img);
+      setHeaderStyle((prevStyle) => ({
+        ...prevStyle,
+        background: `linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent), url(http://localhost:5000/uploads/${response.thumbnail_img}) center/cover no-repeat`,
+      }));
     } catch (error) {
       console.error(error);
     }
   };
 
+  const isTransaksiExist = async () => {
+    try {
+      const response = await checkTransaction(idUser, id);
+      setIsT(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (services) {
+      isTransaksiExist();
+    }
+  }, [services, idUser]);
+
   useEffect(() => {
     document.title = "Detail Course | MITGLOS EDU";
 
     fetchData();
-  });
+    console.log("kk");
+  }, []);
 
   const scrollRef = useRef(null);
 
@@ -57,9 +73,7 @@ function DetailCourse() {
     }
   }, [scrollRef]);
 
-  const registHandle = (e) => {
-    e.preventDefault();
-
+  const registHandle = () => {
     if (sessionStorage.getItem("token") === null) {
       Swal.fire({
         title: "Login Dulu Yuk!",
@@ -81,7 +95,7 @@ function DetailCourse() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           if (user.role.name === "admin") {
             Swal.fire(
@@ -92,8 +106,18 @@ function DetailCourse() {
             return;
           }
           try {
-            postTransaction(services?.id, idUser);
+            // const response = await postTransaction(services?.id, idUser);
+
+            if (isT?.status === "cancel") {
+              const response = await updateEvent(isT?.id, "progress");
+              console.log("pc");
+            } else {
+              const response = await postTransaction(services?.id, idUser);
+              console.log("cc");
+            }
+
             Swal.fire("Berhasil!", "Kamu berhasil mendaftar!", "success");
+            isTransaksiExist();
           } catch (error) {
             console.log(error);
           }
@@ -101,6 +125,22 @@ function DetailCourse() {
       });
     }
   };
+
+  const cancelEvent = () => {
+    // swal info user can cancel event on dashboard
+    Swal.fire({
+      title: "Pembatalan Event dapat dilakukan di Dashboard",
+      confirmButtonText: "Menuju Dashboard",
+      showCancelButton: true,
+      cancelButtonText: "Tetap di Halaman",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        navigate("/dashboard");
+      }
+    });
+  };
+
   return services ? (
     <div ref={scrollRef}>
       <div className="container mt-5">
@@ -141,11 +181,12 @@ function DetailCourse() {
         </section>
 
         <section id="detail">
-          {isT && services?.kategori?.name === "Webinar" ? (
+          {isT && isT?.status !== "cancel" ? (
             <div class="alert alert-primary ms-2 me-2" role="alert">
               <i class="fa-solid fa-circle-info"></i> Kamu Telah Terdaftar Pada
-              Webinar Ini, Silahkan Cek <Link to={"/dashboard"}>Dashboard</Link>{" "}
-              Secara Berkala Untuk Mendapatkan Link Webinar
+              {services?.kategori?.name === "Webinar"
+                ? " Webinar ini, Silahkan Cek Dashboard Secara Berkala Untuk Mendapatkan Link webinar"
+                : " Course ini."}{" "}
             </div>
           ) : null}
           <div className="row">
@@ -155,9 +196,23 @@ function DetailCourse() {
                 style={{ marginTop: "20px" }}
               >
                 <Button
-                  text="Daftar Sekarang"
-                  onClick={registHandle}
-                  disabled={isT ? true : false}
+                  text={
+                    isT?.isTransaksiExist && isT?.status !== "cancel"
+                      ? "Batalkan Kehadiran"
+                      : "Daftar Sekarang"
+                  }
+                  onClick={() => {
+                    if (isT?.isTransaksiExist && isT?.status !== "cancel") {
+                      cancelEvent(services?.id);
+                    } else {
+                      registHandle();
+                    }
+                  }}
+                  // onClick={
+                  //   isT?.isTransaksiExist && isT?.status !== "cancel"
+                  //     ? cancelEvent(services?.id)
+                  //     : registHandle
+                  // }
                 />
               </div>
               <div className="detail-card">
@@ -186,9 +241,23 @@ function DetailCourse() {
                 style={{ marginTop: "20px" }}
               >
                 <Button
-                  text="Daftar Sekarang"
-                  onClick={registHandle}
-                  disabled={isT ? true : false}
+                  text={
+                    isT?.isTransaksiExist && isT?.status !== "cancel"
+                      ? "Batalkan Kehadiran"
+                      : "Daftar Sekarang"
+                  }
+                  onClick={() => {
+                    if (isT?.isTransaksiExist && isT?.status !== "cancel") {
+                      cancelEvent(services?.id);
+                    } else {
+                      registHandle();
+                    }
+                  }}
+                  // onClick={
+                  //   isT?.isTransaksiExist && isT?.status !== "cancel"
+                  //     ? cancelEvent(services?.id)
+                  //     : registHandle
+                  // }
                 />
               </div>
               <div className="detail-card">

@@ -9,6 +9,7 @@ import {
   formatRupiah,
 } from "../components/utils/Constants";
 import { ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 const AdminDashboard = ({ user, handleLogout, randomGreetings }) => {
   let navigate = useNavigate();
@@ -47,7 +48,7 @@ const AdminDashboard = ({ user, handleLogout, randomGreetings }) => {
   useEffect(() => {
     document.title = "Dashboard";
     fetchData();
-  });
+  }, []);
 
   return (
     <>
@@ -99,13 +100,21 @@ const AdminDashboard = ({ user, handleLogout, randomGreetings }) => {
                       </span>
                     </td>
                     <td className="text-center">
-                      <Link
+                      <button
                         type="button"
                         className="btn btn-outline-primary btn-sm  outfit"
-                        to={""}
+                        onClick={() => {
+                          //coming soon swal
+                          Swal.fire({
+                            title: "Coming Soon!",
+                            text: "Fitur ini akan segera hadir",
+                            icon: "info",
+                            confirmButtonText: "OK",
+                          });
+                        }}
                       >
                         <i class="fa-solid fa-circle-info"></i> Detail
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -257,19 +266,33 @@ const AdminDashboard = ({ user, handleLogout, randomGreetings }) => {
                       </a>
                     </td>
                     <td className="text-center">
-                      <Link
-                        type="button"
-                        className="btn btn-outline-primary btn-sm me-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                      >
-                        <i class="fa-solid fa-circle-info"></i> Detail
-                      </Link>
                       <button
                         type="button"
+                        className="btn btn-outline-primary btn-sm me-2"
+                        onClick={() => {
+                          //coming soon swal
+                          Swal.fire({
+                            title: "Coming Soon!",
+                            text: "Fitur ini akan segera hadir",
+                            icon: "info",
+                            confirmButtonText: "OK",
+                          });
+                        }}
+                      >
+                        <i class="fa-solid fa-circle-info"></i> Detail
+                      </button>
+                      <button
+                        onClick={() => {
+                          //coming soon swal
+                          Swal.fire({
+                            title: "Coming Soon!",
+                            text: "Fitur ini akan segera hadir",
+                            icon: "info",
+                            confirmButtonText: "OK",
+                          });
+                        }}
+                        type="button"
                         className="btn btn-outline-success btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
                       >
                         <i class="fa-solid fa-circle-edit"></i> Edit
                       </button>

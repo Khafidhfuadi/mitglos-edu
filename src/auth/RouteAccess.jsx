@@ -6,7 +6,7 @@ import AdminNavbar from "../components/utils/AdminNavbar";
 
 export const withAuthUser = (Component) => {
   const AuthRoute = (props) => {
-    if (props.user.role.name === "user") {
+    if (props.user && props.user.role && props.user.role.name === "user") {
       return (
         <>
           <Navbar {...props} />

@@ -1,33 +1,44 @@
 import React, { useState } from "react";
+import { forgotPassword } from "../components/utils/Constants";
+import { ToastContainer, toast } from "react-toastify";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Add logic to handle password reset
+
+    try {
+      const response = await forgotPassword(email);
+      toast.success("Permintaan berhasil dikirim. Silahkan cek email Anda.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "An error occurred.");
+    }
   };
 
   return (
-    <section className="container justify-content-center ms-0 me-0">
-      <h1 className="reset-password-title">Reset Password</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="formEmail">Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            id="formEmail"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <button className="btn btn-primary" type="submit">
-          Reset Password
-        </button>
-      </form>
-    </section>
+    <>
+      <ToastContainer />
+      <section className="container">
+        <h1 className="reset-password-title">Lupa Password</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="formEmail">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              id="formEmail"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <button className="btn btn-primary mt-3 outfit" type="submit">
+            Kirim Permintaan
+          </button>
+        </form>
+      </section>
+    </>
   );
 };
 

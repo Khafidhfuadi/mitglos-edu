@@ -18,6 +18,9 @@ import SuccessEmailConfirm from "./components/SuccessEmailConfirm";
 import EmailTokenExpired from "./components/EmailTokenExpired";
 import ServicesList from "./components/ServicesList";
 import ResetPassword from "./auth/ResetPassword";
+import NewPasswordReset from "./auth/NewPasswordReset";
+import Account from "./auth/Account";
+import HistoryEvent from "./user/HistoryEvent";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -29,6 +32,11 @@ function App() {
   //   setUser(userData);
   //   sessionStorage.setItem("user", JSON.stringify(userData));
   // };
+
+  const handleSetUser = (userData) => {
+    setUser(userData);
+    sessionStorage.setItem("user", JSON.stringify(userData));
+  };
 
   const handleLogin = (data) => {
     const { token, user } = data;
@@ -152,12 +160,45 @@ function App() {
             </>
           }
         />
+        <Route
+          exact
+          path="/reset/:token"
+          element={
+            <>
+              <Navbar user={user} handleLogout={handleLogout} />
+              <NewPasswordReset handleLogin={handleLogin} />
+              <Footer />
+            </>
+          }
+        />
 
         <Route exact path="/" element={<PrivateRoute user={user} />}>
           <Route
             exact
             path="/dashboard"
             element={<Dashboard user={user} handleLogout={handleLogout} />}
+          />
+          <Route
+            exact
+            path="/account"
+            element={
+              <Account
+                user={user}
+                handleLogout={handleLogout}
+                handleSetUser={handleSetUser}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/history-event"
+            element={
+              <HistoryEvent
+                user={user}
+                handleLogout={handleLogout}
+                handleSetUser={handleSetUser}
+              />
+            }
           />
           <Route
             exact

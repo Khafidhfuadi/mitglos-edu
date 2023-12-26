@@ -183,7 +183,7 @@ function AuthPage({ handleLogin }) {
                   </div>
                   {/* forget password? */}
                   <div className="text-end mb-3">
-                    <Link to={'/reset-password'}>Lupa Password?</Link>
+                    <Link to={"/reset-password"}>Lupa Password?</Link>
                   </div>
                   <div className="float-end">
                     <Button text="Login" onClick={handleSubmitLogin} />
@@ -280,7 +280,7 @@ function AuthPage({ handleLogin }) {
                   </div>
                 </div>
 
-                <div class="mb-3 form-check">
+                {/* <div class="mb-3 form-check">
                   <input
                     type="checkbox"
                     class="form-check-input"
@@ -293,7 +293,7 @@ function AuthPage({ handleLogin }) {
                     </a>{" "}
                     yang berlaku
                   </label>
-                </div>
+                </div> */}
                 <div className="float-end">
                   <Button text="Register" onClick={handleSubmitRegister} />
                 </div>

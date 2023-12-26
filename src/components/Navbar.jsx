@@ -91,15 +91,15 @@ function Navbar(props) {
                       aria-labelledby="navbarDropdown"
                     >
                       <li>
-                        <a class="dropdown-item" href="#">
+                        <Link to="/account" class="dropdown-item">
                           <i class="fas fa-sliders-h fa-fw"></i> Account
-                        </a>
+                        </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <a class="dropdown-item" href="#">
                           <i class="fas fa-cog fa-fw"></i> Settings
                         </a>
-                      </li>
+                      </li> */}
                       <li>
                         <hr class="dropdown-divider" />
                       </li>
